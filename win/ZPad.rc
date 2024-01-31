@@ -81,6 +81,8 @@ END
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 
+
+#if 0
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
@@ -348,7 +350,7 @@ BEGIN
         MENUITEM "Save Settings &Now\tF7",      IDZPAD_VIEW_SAVESETTINGSNOW
     END
 END
-
+#endif
 /////////////////////////////////////////////////////////////////////////////
 //
 // Icon
