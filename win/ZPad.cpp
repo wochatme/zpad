@@ -13,6 +13,11 @@
 #include "resource.h"
 #include "ZPad.h"
 
+#include "notepad2.h"
+#include "styles.h"
+#include "edit.h"
+#include "helpers.h"
+
 #include "View.h"
 #include "aboutdlg.h"
 #include "MainFrm.h"

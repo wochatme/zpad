@@ -14,7 +14,9 @@ public:
 
 	CView m_view;
 	CCommandBarCtrl m_CmdBar;
-	HWND m_hWndScintilla = nullptr;
+	// HWND m_hWndScintilla = nullptr;
+	int (*m_fnScintilla)(void*, int, int, int);
+	void* m_ptrScintilla = nullptr;
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg)
 	{
@@ -40,7 +42,8 @@ public:
 		MESSAGE_HANDLER(WM_CREATE, OnCreate)
 		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
 		COMMAND_ID_HANDLER(ID_APP_EXIT, OnFileExit)
-		COMMAND_ID_HANDLER(ID_FILE_NEW, OnFileNew)
+		//COMMAND_ID_HANDLER(ID_FILE_NEW, OnFileNew)
+		COMMAND_ID_HANDLER(IDZPAD_VIEW_FONT, OnViewFont)
 		COMMAND_ID_HANDLER(ID_FILE_NEW_WINDOW, OnFileNewWindow)
 		COMMAND_ID_HANDLER(ID_VIEW_TOOLBAR, OnViewToolBar)
 		COMMAND_ID_HANDLER(ID_VIEW_STATUS_BAR, OnViewStatusBar)
@@ -74,13 +77,22 @@ public:
 		CreateSimpleStatusBar();
 
 		//m_hWndClient = m_view.Create(m_hWnd, rcDefault, NULL, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN, WS_EX_CLIENTEDGE);
+
+		// m_hWndScintilla = nullptr;
 		m_hWndClient = ::CreateWindowExW(0, L"Scintilla", L"", 
 										WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_VSCROLL | WS_HSCROLL, 
 										0, 0, 2, 2, m_hWnd, NULL, g_hInstance, NULL);
 
 		if (::IsWindow(m_hWndClient))
 		{
-			::SendMessage(m_hWndClient, SCI_SETWRAPMODE, SC_WRAP_WORD, 0);
+			// m_hWndScintilla = m_hWndClient;
+			m_fnScintilla = (int(__cdecl*)(void*, int, int, int))SendMessage(m_hWndClient, SCI_GETDIRECTFUNCTION, 0, 0);
+			ATLASSERT(m_fnScintilla);
+			m_ptrScintilla = (void*)SendMessage(m_hWndClient, SCI_GETDIRECTPOINTER, 0, 0);
+			ATLASSERT(m_ptrScintilla);
+
+			//::SendMessage(m_hWndClient, SCI_SETWRAPMODE, SC_WRAP_WORD, 0);
+			m_fnScintilla(m_ptrScintilla, SCI_SETWRAPMODE, SC_WRAP_WORD, 0);
 		}
 
 		UIAddToolBar(hWndToolBar);
@@ -114,10 +126,13 @@ public:
 		return 0;
 	}
 
-	LRESULT OnFileNew(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	LRESULT OnViewFont(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 	{
 		// TODO: add code to initialize document
-
+		// MessageBox(_T("got!"), L"ZPad", MB_OK);
+		// Style_SetDefaultFont(m_hWndClient);
+		// UpdateStatusbar();
+		// UpdateLineNumberWidth();
 		return 0;
 	}
 
