@@ -1,0 +1,561 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "atlres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""atlres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  16, 16
+BEGIN
+    BUTTON      IDZPAD_FILE_NEW
+    BUTTON      IDZPAD_FILE_OPEN
+    BUTTON      IDZPAD_FILE_BROWSE
+    BUTTON      IDZPAD_FILE_SAVE
+    SEPARATOR
+    BUTTON      IDZPAD_EDIT_UNDO
+    BUTTON      IDZPAD_EDIT_REDO
+    BUTTON      IDZPAD_EDIT_CUT
+    BUTTON      IDZPAD_EDIT_COPY
+    BUTTON      IDZPAD_EDIT_PASTE
+    BUTTON      IDZPAD_EDIT_FIND
+    BUTTON      IDZPAD_EDIT_REPLACE
+    SEPARATOR
+    BUTTON      IDZPAD_VIEW_WRAP
+    BUTTON      IDZPAD_VIEW_ZOOMIN
+    BUTTON      IDZPAD_VIEW_ZOOMOUT
+    BUTTON      IDZPAD_VIEW_SCHEMES
+    BUTTON      IDZPAD_VIEW_SCHEMEC
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New\tCtrl+N",                IDZPAD_FILE_NEW
+        MENUITEM "&Open...\tCtrl+O",            IDZPAD_FILE_OPEN
+		MENUITEM "Re&vert\tF5",                 IDZPAD_FILE_REVERT
+        MENUITEM "&Save\tCtrl+S",               IDZPAD_FILE_SAVE
+		MENUITEM "Save &As...\tF6",             IDZPAD_FILE_SAVEAS
+		MENUITEM "Save &Copy...\tCtrl+F6",      IDZPAD_FILE_SAVECOPY
+		MENUITEM "&Read Only",                  IDZPAD_FILE_READONLY
+        MENUITEM SEPARATOR
+        POPUP "&Launch"
+        BEGIN
+            MENUITEM "&New Window\tAlt+N",          IDZPAD_FILE_NEWWINDOW
+            MENUITEM "&Empty Window\tAlt+0",        IDZPAD_FILE_NEWWINDOW2
+            MENUITEM SEPARATOR
+            MENUITEM "Execute &Document\tCtrl+L",   IDZPAD_FILE_LAUNCH
+            MENUITEM "&Open with...\tAlt+L",        IDZPAD_FILE_OPENWITH
+            MENUITEM "&Command...\tCtrl+R",         IDZPAD_FILE_RUN
+        END
+        MENUITEM SEPARATOR
+        POPUP "&Encoding"
+        BEGIN
+            MENUITEM "&ANSI",                       IDZPAD_ENCODING_ANSI
+            MENUITEM "&Unicode",                    IDZPAD_ENCODING_UNICODE
+            MENUITEM "Unicode &Big Endian",         IDZPAD_ENCODING_UNICODEREV
+            MENUITEM "UTF-&8",                      IDZPAD_ENCODING_UTF8
+            MENUITEM "UTF-8 with &Signature",       IDZPAD_ENCODING_UTF8SIGN
+            MENUITEM "&More...\tF9",                IDZPAD_ENCODING_SELECT
+            MENUITEM SEPARATOR
+            MENUITEM "&Recode...\tF8",              IDZPAD_ENCODING_RECODE
+            MENUITEM SEPARATOR
+            MENUITEM "&Default...",                 IDZPAD_ENCODING_SETDEFAULT
+        END
+        POPUP "Line Endin&gs"
+        BEGIN
+            MENUITEM "&Windows (CR+LF)",            IDZPAD_LINEENDINGS_CRLF
+            MENUITEM "&Unix (LF)",                  IDZPAD_LINEENDINGS_LF
+            MENUITEM "&Mac (CR)",                   IDZPAD_LINEENDINGS_CR
+            MENUITEM SEPARATOR
+            MENUITEM "&Default...",                 IDZPAD_LINEENDINGS_SETDEFAULT
+
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Page Se&tup...",              IDZPAD_FILE_PAGESETUP
+        MENUITEM "&Print...\tCtrl+P",           IDZPAD_FILE_PRINT
+        MENUITEM SEPARATOR
+        MENUITEM "Propert&ies...",              IDZPAD_FILE_PROPERTIES
+        MENUITEM "Create &Desktop Link",        IDZPAD_FILE_CREATELINK
+        MENUITEM SEPARATOR
+        POPUP "&Favorites"
+        BEGIN
+            MENUITEM "&Open Favorites...\tAlt+I",   IDZPAD_FILE_OPENFAV
+            MENUITEM "&Add Current File...\tAlt+K", IDZPAD_FILE_ADDTOFAV
+            MENUITEM "&Manage...\tAlt+F9",          IDZPAD_FILE_MANAGEFAV
+        END
+        MENUITEM "Recent (&History)...\tAlt+H", IDZPAD_FILE_RECENT
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",               IDZPAD_FILE_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",               IDZPAD_EDIT_UNDO
+        MENUITEM "&Redo\tCtrl+Y",               IDZPAD_EDIT_REDO
+        MENUITEM SEPARATOR
+        MENUITEM "Cu&t\tCtrl+X",                IDZPAD_EDIT_CUT
+        MENUITEM "&Copy\tCtrl+C",               IDZPAD_EDIT_COPY
+        MENUITEM "Copy A&ll\tAlt+C",            IDZPAD_EDIT_COPYALL
+        MENUITEM "Copy &Add\tCtrl+E",           IDZPAD_EDIT_COPYADD
+        MENUITEM "&Paste\tCtrl+V",              IDZPAD_EDIT_PASTE
+        MENUITEM "S&wap\tCtrl+K",               IDZPAD_EDIT_SWAP
+        MENUITEM "Clear\tDel",                  IDZPAD_EDIT_CLEAR
+        MENUITEM "Clear Clipboar&d",            IDZPAD_EDIT_CLEARCLIPBOARD
+        MENUITEM "&Select All\tCtrl+A",         IDZPAD_EDIT_SELECTALL
+        MENUITEM SEPARATOR
+        POPUP "L&ines"
+        BEGIN
+            MENUITEM "Move &Up\tCtrl+Shift+Up",     IDZPAD_EDIT_MOVELINEUP
+            MENUITEM "&Move Down\tCtrl+Shift+Down", IDZPAD_EDIT_MOVELINEDOWN
+            MENUITEM SEPARATOR
+            MENUITEM "&Duplicate Line\tCtrl+D",     IDZPAD_EDIT_DUPLICATELINE
+            MENUITEM "&Cut Line\tCtrl+Shift+X",     IDZPAD_EDIT_CUTLINE
+            MENUITEM "C&opy Line\tCtrl+Shift+C",    IDZPAD_EDIT_COPYLINE
+            MENUITEM "D&elete Line\tCtrl+Shift+D",  IDZPAD_EDIT_DELETELINE
+            MENUITEM SEPARATOR
+            MENUITEM "Column &Wrap...\tCtrl+Shift+W", IDZPAD_EDIT_COLUMNWRAP
+            MENUITEM "&Split Lines\tCtrl+I",        IDZPAD_EDIT_SPLITLINES
+            MENUITEM "&Join Lines\tCtrl+J",         IDZPAD_EDIT_JOINLINES
+            MENUITEM "Join &Paragraphs\tCtrl+Shift+J", IDZPAD_EDIT_JOINLINESEX
+        END
+        POPUP "&Block"
+        BEGIN
+            MENUITEM "&Indent\tTab",                IDZPAD_EDIT_INDENT
+            MENUITEM "&Unindent\tShift+Tab",        IDZPAD_EDIT_UNINDENT
+            MENUITEM SEPARATOR
+            MENUITEM "&Enclose Selection...\tAlt+Q",
+                                                    IDZPAD_EDIT_ENCLOSESELECTION
+
+            MENUITEM "&Duplicate Selection\tAlt+D", IDZPAD_EDIT_SELECTIONDUPLICATE
+
+            MENUITEM SEPARATOR
+            MENUITEM "&Pad With Spaces\tAlt+B",     IDZPAD_EDIT_PADWITHSPACES
+            MENUITEM "Strip &First Character\tAlt+Z", IDZPAD_EDIT_STRIP1STCHAR
+            MENUITEM "Strip &Last Character\tAlt+U", IDZPAD_EDIT_STRIPLASTCHAR
+            MENUITEM "Strip &Trailing Blanks\tAlt+W", IDZPAD_EDIT_TRIMLINES
+            MENUITEM "Compress &Whitespace\tAlt+P", IDZPAD_EDIT_COMPRESSWS
+            MENUITEM "Merge &Blank Lines\tAlt+Y",   IDZPAD_EDIT_MERGEBLANKLINES
+            MENUITEM "&Remove Blank Lines\tAlt+R",  IDZPAD_EDIT_REMOVEBLANKLINES
+
+            MENUITEM SEPARATOR
+            MENUITEM "&Modify Lines...\tAlt+M",     IDZPAD_EDIT_MODIFYLINES
+            MENUITEM "Alig&n Lines...\tAlt+J",      IDZPAD_EDIT_ALIGN
+            MENUITEM "S&ort Lines...\tAlt+O",       IDZPAD_EDIT_SORTLINES
+        END
+        POPUP "C&onvert"
+        BEGIN
+            MENUITEM "&Uppercase\tCtrl+Shift+U",    IDZPAD_EDIT_CONVERTUPPERCASE
+
+            MENUITEM "&Lowercase\tCtrl+U",          IDZPAD_EDIT_CONVERTLOWERCASE
+
+            MENUITEM SEPARATOR
+            MENUITEM "&Invert Case\tCtrl+Alt+U",    IDZPAD_EDIT_INVERTCASE
+            MENUITEM "Title &Case\tCtrl+Alt+I",     IDZPAD_EDIT_TITLECASE
+            MENUITEM "&Sentence Case\tCtrl+Alt+O",  IDZPAD_EDIT_SENTENCECASE
+            MENUITEM SEPARATOR
+            MENUITEM "&Tabify Selection\tCtrl+Shift+T",
+                                                    IDZPAD_EDIT_CONVERTSPACES
+            MENUITEM "U&ntabify Selection\tCtrl+Shift+S",
+                                                    IDZPAD_EDIT_CONVERTTABS
+            MENUITEM SEPARATOR
+            MENUITEM "Ta&bify Indent\tCtrl+Alt+T",  IDZPAD_EDIT_CONVERTSPACES2
+            MENUITEM "Untabi&fy Indent\tCtrl+Alt+S", IDZPAD_EDIT_CONVERTTABS2
+        END
+        POPUP "I&nsert"
+        BEGIN
+            MENUITEM "&HTML/XML Tag...\tAlt+X",     IDZPAD_EDIT_INSERT_TAG
+            MENUITEM SEPARATOR
+            MENUITEM "&Encoding Identifier\tCtrl+F8",
+                                                    IDZPAD_EDIT_INSERT_ENCODING
+            MENUITEM SEPARATOR
+            MENUITEM "Time/Date (&Short Form)\tCtrl+F5",
+                                                    IDZPAD_EDIT_INSERT_SHORTDATE
+
+            MENUITEM "Time/Date (&Long Form)\tCtrl+Shift+F5",
+                                                    IDZPAD_EDIT_INSERT_LONGDATE
+            MENUITEM SEPARATOR
+            MENUITEM "&Filename\tCtrl+F9",          IDZPAD_EDIT_INSERT_FILENAME
+            MENUITEM "&Path and Filename\tCtrl+Shift+F9",
+                                                    IDZPAD_EDIT_INSERT_PATHNAME
+        END
+        POPUP "Spec&ial"
+        BEGIN
+            MENUITEM "Line Comment (&Toggle)\tCtrl+Q", IDZPAD_EDIT_LINECOMMENT
+            MENUITEM "Stream &Comment\tCtrl+Shift+Q", IDZPAD_EDIT_STREAMCOMMENT
+            MENUITEM SEPARATOR
+            MENUITEM "URL &Encode\tCtrl+Shift+E",   IDZPAD_EDIT_URLENCODE
+            MENUITEM "URL &Decode\tCtrl+Shift+R",   IDZPAD_EDIT_URLDECODE
+            MENUITEM SEPARATOR
+            MENUITEM "Esca&pe C Chars\tCtrl+Alt+E", IDZPAD_EDIT_ESCAPECCHARS
+            MENUITEM "&Unescape C Chars\tCtrl+Alt+R",
+                                                    IDZPAD_EDIT_UNESCAPECCHARS
+            MENUITEM SEPARATOR
+            MENUITEM "C&har To Hex\tCtrl+Alt+X",    IDZPAD_EDIT_CHAR2HEX
+            MENUITEM "Hex To Cha&r\tCtrl+Alt+C",    IDZPAD_EDIT_HEX2CHAR
+            MENUITEM SEPARATOR
+            MENUITEM "&Find Matching Brace\tCtrl+B",
+                                                    IDZPAD_EDIT_FINDMATCHINGBRACE
+
+            MENUITEM "&Select To Matching Brace\tCtrl+Shift+B",
+                                                    IDZPAD_EDIT_SELTOMATCHINGBRACE
+
+            MENUITEM SEPARATOR
+            MENUITEM "Select To Ne&xt\tF2",         IDZPAD_EDIT_SELTONEXT
+            MENUITEM "Select To Pre&vious\tShift+F2", IDZPAD_EDIT_SELTOPREV
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "&Find...\tCtrl+F",            IDZPAD_EDIT_FIND
+        MENUITEM "Sa&ve Find Text\tAlt+F3",     IDZPAD_EDIT_SAVEFIND
+        MENUITEM "Find Ne&xt\tF3",              IDZPAD_EDIT_FINDNEXT
+        MENUITEM "Find Pre&vious\tShift+F3",    IDZPAD_EDIT_FINDPREV
+        MENUITEM "R&eplace...\tCtrl+H",         IDZPAD_EDIT_REPLACE
+        MENUITEM "Replace Ne&xt\tF4",           IDZPAD_EDIT_REPLACENEXT
+        MENUITEM "&Goto...\tCtrl+G",            IDZPAD_EDIT_GOTOLINE
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Syntax Scheme...\tF12",      IDZPAD_VIEW_SCHEME
+        MENUITEM "&2nd Default Scheme\tShift+F12", IDZPAD_VIEW_USE2NDDEFAULT
+        MENUITEM "&Customize Schemes...\tCtrl+F12", IDZPAD_VIEW_SCHEMECONFIG
+        MENUITEM "&Default Font...\tAlt+F12",   IDZPAD_VIEW_FONT
+        MENUITEM SEPARATOR
+        MENUITEM "Word W&rap\tCtrl+W",          IDZPAD_VIEW_WORDWRAP
+        MENUITEM "&Long Line Marker\tCtrl+Shift+L", IDZPAD_VIEW_LONGLINEMARKER
+        MENUITEM "Indentation &Guides\tCtrl+Shift+G",
+                                                IDZPAD_VIEW_SHOWINDENTGUIDES
+        MENUITEM SEPARATOR
+        MENUITEM "Show &Whitespace\tCtrl+Shift+8", IDZPAD_VIEW_SHOWWHITESPACE
+        MENUITEM "Show Line &Endings\tCtrl+Shift+9", IDZPAD_VIEW_SHOWEOLS
+        MENUITEM "Show Wrap S&ymbols\tCtrl+Shift+0",
+                                                IDZPAD_VIEW_WORDWRAPSYMBOLS
+        MENUITEM SEPARATOR
+        MENUITEM "Visual &Brace Matching\tCtrl+Shift+V",
+                                                IDZPAD_VIEW_MATCHBRACES
+        MENUITEM "Highlight C&urrent Line\tCtrl+Shift+I",
+                                                IDZPAD_VIEW_HILITECURRENTLINE
+        MENUITEM SEPARATOR
+        MENUITEM "Line &Numbers\tCtrl+Shift+N", IDZPAD_VIEW_LINENUMBERS
+        MENUITEM "Selection &Margin\tCtrl+Shift+M", IDZPAD_VIEW_MARGIN
+        MENUITEM SEPARATOR
+        MENUITEM "Zoom &In\tCtrl++",            IDZPAD_VIEW_ZOOMIN
+        MENUITEM "Zoom &Out\tCtrl+-",           IDZPAD_VIEW_ZOOMOUT
+        MENUITEM "Reset &Zoom\tCtrl+/",         IDZPAD_VIEW_RESETZOOM
+    END
+    POPUP "&Settings"
+    BEGIN
+        MENUITEM "Insert Tabs as &Spaces",      IDZPAD_VIEW_TABSASSPACES
+        MENUITEM "&Tab Settings...\tCtrl+T",    IDZPAD_VIEW_TABSETTINGS
+        MENUITEM "&Word Wrap Settings...",      IDZPAD_VIEW_WORDWRAPSETTINGS
+        MENUITEM "&Long Line Settings...",      IDZPAD_VIEW_LONGLINESETTINGS
+        MENUITEM "Auto In&dent Text",           IDZPAD_VIEW_AUTOINDENTTEXT
+        MENUITEM "Auto Close &HTML/XML\tCtrl+Shift+H",
+                                                IDZPAD_VIEW_AUTOCLOSETAGS
+        MENUITEM SEPARATOR
+        MENUITEM "&Reuse Window",               IDZPAD_VIEW_REUSEWINDOW
+        MENUITEM "Sticky Window &Position",     IDZPAD_VIEW_STICKYWINPOS
+        MENUITEM "&Always On Top\tAlt+T",       IDZPAD_VIEW_ALWAYSONTOP
+        MENUITEM "Minimi&ze To Tray",           IDZPAD_VIEW_MINTOTRAY
+        MENUITEM "Transparent &Mode\tCtrl+0",   IDZPAD_VIEW_TRANSPARENT
+        MENUITEM SEPARATOR
+        MENUITEM "Single &File Instance",       IDZPAD_VIEW_SINGLEFILEINSTANCE
+        MENUITEM "File &Change Notification...\tAlt+F5",
+                                                IDZPAD_VIEW_CHANGENOTIFY
+        POPUP "Window Title Displa&y"
+        BEGIN
+            MENUITEM "Filename &Only",              IDZPAD_VIEW_SHOWFILENAMEONLY
+
+            MENUITEM "Filename and &Directory",     IDZPAD_VIEW_SHOWFILENAMEFIRST
+
+            MENUITEM "Full &Pathname",              IDZPAD_VIEW_SHOWFULLPATH
+            MENUITEM "&Text Excerpt\tCtrl+9",       IDZPAD_VIEW_SHOWEXCERPT
+        END
+        POPUP "Esc &Key Function"
+        BEGIN
+            MENUITEM "&None",                       IDZPAD_VIEW_NOESCFUNC
+            MENUITEM "&Minimize Notepad2",          IDZPAD_VIEW_ESCMINIMIZE
+            MENUITEM "E&xit Notepad2",              IDZPAD_VIEW_ESCEXIT
+        END
+        MENUITEM "Sa&ve Before Running Tools",  IDZPAD_VIEW_SAVEBEFORERUNNINGTOOLS
+
+        MENUITEM "Remember Recent F&iles",      IDZPAD_VIEW_NOSAVERECENT
+        MENUITEM "Remember S&earch Strings",    IDZPAD_VIEW_NOSAVEFINDREPL
+        MENUITEM SEPARATOR
+        MENUITEM "Sh&ow Toolbar",               IDZPAD_VIEW_TOOLBAR
+        MENUITEM "C&ustomize Toolbar...",       IDZPAD_VIEW_CUSTOMIZETB
+        MENUITEM "Sh&ow Statusbar",             IDZPAD_VIEW_STATUSBAR
+        MENUITEM SEPARATOR
+        MENUITEM "Save Settings On E&xit",      IDZPAD_VIEW_SAVESETTINGS
+        MENUITEM "Save Settings &Now\tF7",      IDZPAD_VIEW_SAVESETTINGSNOW
+    END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\ZPad.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG  0, 0, 187, 102
+STYLE DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About"
+FONT 9, "Segoe UI"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,130,81,50,14
+    CTEXT           "ZPad Application v1.0\n\n(c) Copyright 2024",IDC_STATIC,25,57,78,
+                    32
+    ICON            IDR_MAINFRAME,IDC_STATIC,55,26,18,20
+    GROUPBOX        "",IDC_STATIC,7,7,115,88
+END
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 180
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 95
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "\0"
+            VALUE "FileDescription", "ZPad Module\0"
+            VALUE "FileVersion", "1, 0, 0, 1\0"
+            VALUE "InternalName", "ZPad\0"
+            VALUE "LegalCopyright", "Copyright 2024\0"
+            VALUE "OriginalFilename", "ZPad.exe\0"
+            VALUE "ProductName", "ZPad Module\0"
+            VALUE "ProductVersion", "1, 0, 0, 1\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x0409, 0x04B0
+    END
+END
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME	"ZPad"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_WINDOW_NEW           "Open another window for the active document\nNew Window"
+    ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
+    ID_WINDOW_CASCADE       "Arrange windows so they overlap\nCascade Windows"
+    ID_WINDOW_TILE_HORZ     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_TILE_VERT     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Find the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOOLBAR         "Show or hide the toolbar\nToggle ToolBar"
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+END
+
+STRINGTABLE 
+BEGIN
+    ATL_IDS_SCSIZE          "Change the window size"
+    ATL_IDS_SCMOVE          "Change the window position"
+    ATL_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    ATL_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    ATL_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    ATL_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    ATL_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE 
+BEGIN
+    ATL_IDS_SCRESTORE       "Restore the window to normal size"
+    ATL_IDS_SCTASKLIST      "Activate Task List"
+    ATL_IDS_MDICHILD        "Activate this window"
+END
+
+STRINGTABLE 
+BEGIN
+    ATL_IDS_IDLEMESSAGE     "Ready"
+    ATL_IDS_MRU_FILE        "Open this document"
+END
+
+STRINGTABLE 
+BEGIN
+	ID_FILE_NEW_WINDOW  "Open a new window\nNew Window"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+#ifndef APSTUDIO_INVOKED
+#endif    // not APSTUDIO_INVOKED
