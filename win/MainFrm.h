@@ -12,11 +12,9 @@ class CMainFrame :
 public:
 	DECLARE_FRAME_WND_CLASS(NULL, IDR_MAINFRAME)
 
-	CView m_view;
+	//CView m_view;
 	CCommandBarCtrl m_CmdBar;
 	// HWND m_hWndScintilla = nullptr;
-	int (*m_fnScintilla)(void*, int, int, int);
-	void* m_ptrScintilla = nullptr;
 
 	virtual BOOL PreTranslateMessage(MSG* pMsg)
 	{
@@ -41,13 +39,15 @@ public:
 	BEGIN_MSG_MAP(CMainFrame)
 		MESSAGE_HANDLER(WM_CREATE, OnCreate)
 		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
-		COMMAND_ID_HANDLER(ID_APP_EXIT, OnFileExit)
-		//COMMAND_ID_HANDLER(ID_FILE_NEW, OnFileNew)
+		COMMAND_ID_HANDLER(IDZPAD_FILE_NEW, OnFileNew)
+		COMMAND_ID_HANDLER(IDZPAD_FILE_OPEN, OnFileOpen)
+		COMMAND_ID_HANDLER(IDZPAD_FILE_EXIT, OnFileExit)
+		COMMAND_ID_HANDLER(IDZPAD_VIEW_LINENUMBERS, OnViewLineNumbers)
 		COMMAND_ID_HANDLER(IDZPAD_VIEW_FONT, OnViewFont)
 		COMMAND_ID_HANDLER(ID_FILE_NEW_WINDOW, OnFileNewWindow)
 		COMMAND_ID_HANDLER(ID_VIEW_TOOLBAR, OnViewToolBar)
 		COMMAND_ID_HANDLER(ID_VIEW_STATUS_BAR, OnViewStatusBar)
-		COMMAND_ID_HANDLER(ID_APP_ABOUT, OnAppAbout)
+		COMMAND_ID_HANDLER(IDZPAD_FILE_ABOUT, OnAppAbout)
 		CHAIN_MSG_MAP(CUpdateUI<CMainFrame>)
 		CHAIN_MSG_MAP(CFrameWindowImpl<CMainFrame>)
 	END_MSG_MAP()
@@ -86,13 +86,14 @@ public:
 		if (::IsWindow(m_hWndClient))
 		{
 			// m_hWndScintilla = m_hWndClient;
-			m_fnScintilla = (int(__cdecl*)(void*, int, int, int))SendMessage(m_hWndClient, SCI_GETDIRECTFUNCTION, 0, 0);
-			ATLASSERT(m_fnScintilla);
-			m_ptrScintilla = (void*)SendMessage(m_hWndClient, SCI_GETDIRECTPOINTER, 0, 0);
-			ATLASSERT(m_ptrScintilla);
+			g_fnScintilla = (int(__cdecl*)(void*, int, int, int))SendMessage(m_hWndClient, SCI_GETDIRECTFUNCTION, 0, 0);
+			ATLASSERT(g_fnScintilla);
+			g_ptrScintilla = (void*)SendMessage(m_hWndClient, SCI_GETDIRECTPOINTER, 0, 0);
+			ATLASSERT(g_ptrScintilla);
 
 			//::SendMessage(m_hWndClient, SCI_SETWRAPMODE, SC_WRAP_WORD, 0);
-			m_fnScintilla(m_ptrScintilla, SCI_SETWRAPMODE, SC_WRAP_WORD, 0);
+			g_fnScintilla(g_ptrScintilla, SCI_SETTECHNOLOGY, SC_TECHNOLOGY_DIRECTWRITE, 0);
+			g_fnScintilla(g_ptrScintilla, SCI_SETWRAPMODE, SC_WRAP_WORD, 0);
 		}
 
 		UIAddToolBar(hWndToolBar);
@@ -120,9 +121,28 @@ public:
 		return 1;
 	}
 
+	LRESULT OnFileNew(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	{
+		FileLoad(FALSE, TRUE, FALSE, FALSE, L"");
+		return 0;
+	}
+
+	LRESULT OnFileOpen(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	{
+		FileLoad(FALSE, FALSE, FALSE, FALSE, L"");
+		return 0;
+	}
+
 	LRESULT OnFileExit(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
 	{
 		PostMessage(WM_CLOSE);
+		return 0;
+	}
+
+	
+	LRESULT OnViewLineNumbers(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	{
+		UpdateLineNumberWidth();
 		return 0;
 	}
 

@@ -811,8 +811,10 @@ void ScintillaBase::NotifyStyleToNeeded(Sci::Position endStyleNeeded) {
 	Editor::NotifyStyleToNeeded(endStyleNeeded);
 }
 
-sptr_t ScintillaBase::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
-	switch (iMessage) {
+sptr_t ScintillaBase::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) 
+{
+	switch (iMessage) 
+	{
 	case Message::AutoCShow:
 		listType = 0;
 		AutoCompleteStart(PositionFromUPtr(wParam), ConstCharPtrFromSPtr(lParam));

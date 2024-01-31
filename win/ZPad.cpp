@@ -8,8 +8,6 @@
 #include <atldlgs.h>
 #include <atlctrlw.h>
 
-#include "scintilla/Scintilla.h"
-
 #include "resource.h"
 #include "ZPad.h"
 
@@ -23,8 +21,14 @@
 #include "MainFrm.h"
 
 CAppModule _Module;
-HINSTANCE g_hInstance = nullptr;
 
+extern "C"
+{
+	U64			g_statusU64 = ZPAD_STATUS_NONE;
+	HINSTANCE	g_hInstance = nullptr;
+	int			(*g_fnScintilla)(void*, int, int, int) = nullptr;
+	void* g_ptrScintilla = nullptr;
+}
 
 class CZPadThreadManager
 {
@@ -143,16 +147,37 @@ static int InitApplication(HINSTANCE hInstance)
 {
 	int iRet = 0;
 
-	iRet = Scintilla_RegisterClasses(hInstance);
+	g_fnScintilla = nullptr;
+	g_ptrScintilla = nullptr;
 
-	if (iRet) return 0;
+	g_statusU64 = ZPAD_STATUS_NONE;
 
-	return 1;
+	iRet = Scintilla_RegisterClasses(hInstance); /// if none-zero, it is successful.
+
+	if (iRet == 0) 
+		return 1;
+
+	return 0;
 }
 
 static void TermApplication(HINSTANCE hInstance)
 {
 	Scintilla_ReleaseResources();
+}
+
+extern "C"
+{
+	int SendScintillaMessage(int sciMsg, int wParam, int lParam)
+	{
+		int iRet = 0;
+
+		if (g_fnScintilla != nullptr && g_ptrScintilla != nullptr)
+		{
+			iRet = g_fnScintilla(g_ptrScintilla, sciMsg, wParam, lParam);
+		}
+
+		return iRet;
+	}
 }
 
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lpstrCmdLine, int nCmdShow)

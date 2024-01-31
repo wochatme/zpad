@@ -1001,14 +1001,19 @@ void ScintillaWin::SetRenderingParams([[maybe_unused]] Surface *psurf) const {
 #endif
 }
 
-bool ScintillaWin::PaintDC(HDC hdc) {
-	if (technology == Technology::Default) {
+bool ScintillaWin::PaintDC(HDC hdc) 
+{
+	if (technology == Technology::Default) 
+	{
 		AutoSurface surfaceWindow(hdc, this);
-		if (surfaceWindow) {
+		if (surfaceWindow) 
+		{
 			Paint(surfaceWindow, rcPaint);
 			surfaceWindow->Release();
 		}
-	} else {
+	} 
+	else 
+	{
 #if defined(USE_D2D)
 		EnsureRenderTarget(hdc);
 		if (pRenderTarget) {
@@ -1031,7 +1036,8 @@ bool ScintillaWin::PaintDC(HDC hdc) {
 	return true;
 }
 
-sptr_t ScintillaWin::WndPaint() {
+sptr_t ScintillaWin::WndPaint() /// the handle to WM_PAINT
+{
 	//ElapsedPeriod ep;
 
 	// Redirect assertions to debug output and save current state
@@ -1339,8 +1345,10 @@ sptr_t ScintillaWin::HandleCompositionInline(uptr_t, sptr_t lParam) {
 namespace {
 
 // Translate message IDs from WM_* and EM_* to Message::* so can partly emulate Windows Edit control
-Message SciMessageFromEM(unsigned int iMessage) noexcept {
-	switch (iMessage) {
+Message SciMessageFromEM(unsigned int iMessage) noexcept /// just lookup 
+{
+	switch (iMessage) 
+	{
 	case EM_CANPASTE: return Message::CanPaste;
 	case EM_CANUNDO: return Message::CanUndo;
 	case EM_EMPTYUNDOBUFFER: return Message::EmptyUndoBuffer;
@@ -2002,7 +2010,8 @@ sptr_t ScintillaWin::SciMessage(Message iMessage, uptr_t wParam, sptr_t lParam) 
 	return 0;
 }
 
-sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
+sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) /// the real window message process function
+{
 	try {
 		//Platform::DebugPrintf("S M:%x WP:%x L:%x\n", iMessage, wParam, lParam);
 		const unsigned int msg = static_cast<unsigned int>(iMessage);
@@ -2200,7 +2209,8 @@ sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
 		}
 
 		iMessage = SciMessageFromEM(msg);
-		switch (iMessage) {
+		switch (iMessage) 
+		{
 		case Message::GetDirectFunction:
 		case Message::GetDirectStatusFunction:
 		case Message::GetDirectPointer:
@@ -2211,7 +2221,7 @@ sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
 		case Message::EncodedFromUTF8:
 			return SciMessage(iMessage, wParam, lParam);
 
-		default:
+		default: /// others will call WndProc
 			return ScintillaBase::WndProc(iMessage, wParam, lParam);
 		}
 	} catch (std::bad_alloc &) {
@@ -3539,8 +3549,8 @@ void ScintillaWin::Prepare() noexcept {
 	callClassAtom = ::RegisterClassEx(&wndclassc);
 }
 
-bool ScintillaWin::Register(HINSTANCE hInstance_) noexcept {
-
+bool ScintillaWin::Register(HINSTANCE hInstance_) noexcept 
+{
 	hInstance = hInstance_;
 
 	// Register the Scintilla class
@@ -3551,9 +3561,9 @@ bool ScintillaWin::Register(HINSTANCE hInstance_) noexcept {
 	wndclass.lpfnWndProc = ScintillaWin::SWndProc;
 	wndclass.cbWndExtra = sizeof(ScintillaWin *);
 	wndclass.hInstance = hInstance;
-	wndclass.lpszClassName = L"Scintilla";
-	scintillaClassAtom = ::RegisterClassExW(&wndclass);
-	const bool result = 0 != scintillaClassAtom;
+	wndclass.lpszClassName = L"Scintilla"; /// this is the class name
+	scintillaClassAtom = ::RegisterClassExW(&wndclass); /// If the function fails, the return value is zero.
+	const bool result = (0 != scintillaClassAtom); /// so if successful, result is true
 
 	return result;
 }
@@ -3718,8 +3728,8 @@ LRESULT PASCAL ScintillaWin::CTWndProc(
 	return ::DefWindowProc(hWnd, iMessage, wParam, lParam);
 }
 
-sptr_t ScintillaWin::DirectFunction(
-    sptr_t ptr, UINT iMessage, uptr_t wParam, sptr_t lParam) {
+sptr_t ScintillaWin::DirectFunction(sptr_t ptr, UINT iMessage, uptr_t wParam, sptr_t lParam) /// direct call 
+{
 	ScintillaWin *sci = reinterpret_cast<ScintillaWin *>(ptr);
 	PLATFORM_ASSERT(::GetCurrentThreadId() == ::GetWindowThreadProcessId(sci->MainHWND(), nullptr));
 	return sci->WndProc(static_cast<Message>(iMessage), wParam, lParam);

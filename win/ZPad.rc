@@ -145,6 +145,7 @@ BEGIN
         END
         MENUITEM "Recent (&History)...\tAlt+H", IDZPAD_FILE_RECENT
         MENUITEM SEPARATOR
+        MENUITEM "About",                       IDZPAD_FILE_ABOUT
         MENUITEM "E&xit\tAlt+F4",               IDZPAD_FILE_EXIT
     END
     POPUP "&Edit"
