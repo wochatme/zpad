@@ -1,5 +1,5 @@
-#ifndef _zpad_notepad2_h_
-#define _zpad_notepad2_h_
+#ifndef _ZPAD_NOTEPAD3_H_
+#define _ZPAD_NOTEPAD3_H_
 
 #ifdef __cplusplus
 extern "C" {
@@ -9,8 +9,9 @@ extern "C" {
 
 	void UpdateLineNumberWidth();
 
+	void InitGlobals();
 #ifdef __cplusplus
 }
 #endif
 
-#endif // _zpad_notepad2_h_
+#endif // _ZPAD_NOTEPAD3_H_

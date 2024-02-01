@@ -631,12 +631,14 @@ unsigned char CellBuffer::UCharAt(Sci::Position position) const noexcept {
 	return substance.ValueAt(position);
 }
 
-void CellBuffer::GetCharRange(char *buffer, Sci::Position position, Sci::Position lengthRetrieve) const {
+void CellBuffer::GetCharRange(char *buffer, Sci::Position position, Sci::Position lengthRetrieve) const 
+{
 	if (lengthRetrieve <= 0)
 		return;
 	if (position < 0)
 		return;
-	if ((position + lengthRetrieve) > substance.Length()) {
+	if ((position + lengthRetrieve) > substance.Length()) 
+	{
 		Platform::DebugPrintf("Bad GetCharRange %.0f for %.0f of %.0f\n",
 				      static_cast<double>(position),
 				      static_cast<double>(lengthRetrieve),

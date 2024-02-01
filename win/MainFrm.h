@@ -4,6 +4,8 @@
 
 #pragma once
 
+const U8 txt[] = { 0xE7,0x8B,0xA1,0xE5,0x85,0x94,0x0A,0xE4,0xB8,0x89,0xE7,0xAA,0x9F,0};
+
 class CMainFrame : 
 	public CFrameWindowImpl<CMainFrame>, 
 	public CUpdateUI<CMainFrame>,
@@ -39,15 +41,15 @@ public:
 	BEGIN_MSG_MAP(CMainFrame)
 		MESSAGE_HANDLER(WM_CREATE, OnCreate)
 		MESSAGE_HANDLER(WM_DESTROY, OnDestroy)
-		COMMAND_ID_HANDLER(IDZPAD_FILE_NEW, OnFileNew)
-		COMMAND_ID_HANDLER(IDZPAD_FILE_OPEN, OnFileOpen)
-		COMMAND_ID_HANDLER(IDZPAD_FILE_EXIT, OnFileExit)
-		COMMAND_ID_HANDLER(IDZPAD_VIEW_LINENUMBERS, OnViewLineNumbers)
-		COMMAND_ID_HANDLER(IDZPAD_VIEW_FONT, OnViewFont)
-		COMMAND_ID_HANDLER(ID_FILE_NEW_WINDOW, OnFileNewWindow)
+		COMMAND_ID_HANDLER(IDMZPAD_FILE_NEW, OnFileNew)
+		COMMAND_ID_HANDLER(IDMZPAD_FILE_OPEN, OnFileOpen)
+		COMMAND_ID_HANDLER(IDMZPAD_FILE_EXIT, OnFileExit)
+		COMMAND_ID_HANDLER(IDMZPAD_VIEW_LINENUMBERS, OnViewLineNumbers)
+		COMMAND_ID_HANDLER(IDMZPAD_VIEW_FONT, OnViewFont)
+		COMMAND_ID_HANDLER(IDMZPAD_FILE_NEWWINDOW, OnFileNewWindow)
 		COMMAND_ID_HANDLER(ID_VIEW_TOOLBAR, OnViewToolBar)
 		COMMAND_ID_HANDLER(ID_VIEW_STATUS_BAR, OnViewStatusBar)
-		COMMAND_ID_HANDLER(IDZPAD_FILE_ABOUT, OnAppAbout)
+		COMMAND_ID_HANDLER(IDMZPAD_HELP_ABOUT, OnAppAbout)
 		CHAIN_MSG_MAP(CUpdateUI<CMainFrame>)
 		CHAIN_MSG_MAP(CFrameWindowImpl<CMainFrame>)
 	END_MSG_MAP()
@@ -86,7 +88,7 @@ public:
 		if (::IsWindow(m_hWndClient))
 		{
 			// m_hWndScintilla = m_hWndClient;
-			g_fnScintilla = (int(__cdecl*)(void*, int, int, int))SendMessage(m_hWndClient, SCI_GETDIRECTFUNCTION, 0, 0);
+			g_fnScintilla = (U64 (__cdecl*)(void*, UINT, WPARAM, LPARAM))SendMessage(m_hWndClient, SCI_GETDIRECTFUNCTION, 0, 0);
 			ATLASSERT(g_fnScintilla);
 			g_ptrScintilla = (void*)SendMessage(m_hWndClient, SCI_GETDIRECTPOINTER, 0, 0);
 			ATLASSERT(g_ptrScintilla);
@@ -94,6 +96,11 @@ public:
 			//::SendMessage(m_hWndClient, SCI_SETWRAPMODE, SC_WRAP_WORD, 0);
 			g_fnScintilla(g_ptrScintilla, SCI_SETTECHNOLOGY, SC_TECHNOLOGY_DIRECTWRITE, 0);
 			g_fnScintilla(g_ptrScintilla, SCI_SETWRAPMODE, SC_WRAP_WORD, 0);
+			//g_fnScintilla(g_ptrScintilla, SCI_STYLESETFONT, STYLE_DEFAULT, (LPARAM)"Courier New");
+			g_fnScintilla(g_ptrScintilla, SCI_STYLESETFONT, STYLE_DEFAULT, (LPARAM)"Microsoft YaHei");
+			g_fnScintilla(g_ptrScintilla, SCI_STYLESETSIZE, STYLE_DEFAULT, (LPARAM)11);
+
+			SendScintillaMessage(SCI_SETTEXT, 0, (LPARAM)txt);
 		}
 
 		UIAddToolBar(hWndToolBar);
@@ -119,12 +126,6 @@ public:
 
 		bHandled = FALSE;
 		return 1;
-	}
-
-	LRESULT OnFileNew(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
-	{
-		FileLoad(FALSE, TRUE, FALSE, FALSE, L"");
-		return 0;
 	}
 
 	LRESULT OnFileOpen(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
@@ -189,4 +190,20 @@ public:
 		dlg.DoModal();
 		return 0;
 	}
+
+	LRESULT OnFileNew(WORD /*wNotifyCode*/, WORD /*wID*/, HWND /*hWndCtl*/, BOOL& /*bHandled*/)
+	{
+		//FileLoad(FALSE, TRUE, FALSE, FALSE, L"");
+		U64 uRet = 0;
+		U64 wp;
+		char text[128] = { 0 };
+
+		wp = SendScintillaMessage(SCI_GETTEXT, 0, 0); /// get the text length
+		uRet = SendScintillaMessage(SCI_GETTEXT, wp, (intptr_t)text); /// get the text
+
+		uRet = SendScintillaMessage(SCI_SETTEXT, 0, (LPARAM)txt); /// set the text
+
+		return 0;
+	}
+
 };

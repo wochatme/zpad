@@ -259,15 +259,18 @@ struct CharacterExtracted {
 
 /**
  */
-class Document : PerLine, public Scintilla::IDocument, public Scintilla::ILoader, public Scintilla::IDocumentEditable {
-
+class Document : PerLine, public Scintilla::IDocument, public Scintilla::ILoader, public Scintilla::IDocumentEditable 
+{
 public:
 	/** Used to pair watcher pointer with user data. */
-	struct WatcherWithUserData {
+	struct WatcherWithUserData 
+	{
 		DocWatcher *watcher;
 		void *userData;
+		
 		WatcherWithUserData(DocWatcher *watcher_=nullptr, void *userData_=nullptr) noexcept :
-			watcher(watcher_), userData(userData_) {
+			watcher(watcher_), userData(userData_) 
+		{
 		}
 		bool operator==(const WatcherWithUserData &other) const noexcept {
 			return (watcher == other.watcher) && (userData == other.userData);
@@ -436,7 +439,8 @@ public:
 	void DelCharBack(Sci::Position pos);
 
 	char CharAt(Sci::Position position) const noexcept { return cb.CharAt(position); }
-	void SCI_METHOD GetCharRange(char *buffer, Sci_Position position, Sci_Position lengthRetrieve) const override {
+	void SCI_METHOD GetCharRange(char *buffer, Sci_Position position, Sci_Position lengthRetrieve) const override 
+	{
 		cb.GetCharRange(buffer, position, lengthRetrieve);
 	}
 	char SCI_METHOD StyleAt(Sci_Position position) const override { return cb.StyleAt(position); }
@@ -638,7 +642,8 @@ public:
  * A class that wants to receive notifications from a Document must be derived from DocWatcher
  * and implement the notification methods. It can then be added to the watcher list with AddWatcher.
  */
-class DocWatcher {
+class DocWatcher 
+{
 public:
 	virtual ~DocWatcher() {}
 

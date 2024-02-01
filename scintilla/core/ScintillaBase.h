@@ -17,7 +17,8 @@ constexpr ColourRGBA colourIME(0x0, 0x0, 0xffU);
 class LexState;
 /**
  */
-class ScintillaBase : public Editor, IListBoxDelegate {
+class ScintillaBase : public Editor, IListBoxDelegate 
+{
 protected:
 	/** Enumeration of commands and child windows. */
 	enum {

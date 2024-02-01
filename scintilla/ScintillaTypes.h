@@ -127,7 +127,8 @@ enum class StylesCommon {
 	Max = 255,
 };
 
-enum class CharacterSet {
+enum class CharacterSet 
+{
 	Ansi = 0,
 	Default = 1,
 	Baltic = 186,
@@ -329,7 +330,8 @@ enum class IdleStyling {
 	All = 3,
 };
 
-enum class Wrap {
+enum class Wrap 
+{
 	None = 0,
 	Word = 1,
 	Char = 2,
@@ -369,7 +371,8 @@ enum class PhasesDraw {
 	Multiple = 2,
 };
 
-enum class FontQuality {
+enum class FontQuality 
+{
 	QualityMask = 0xF,
 	QualityDefault = 0,
 	QualityNonAntialiased = 1,
@@ -490,7 +493,8 @@ enum class VirtualSpace {
 	NoWrapLineStart = 4,
 };
 
-enum class Technology {
+enum class Technology 
+{
 	Default = 0,
 	DirectWrite = 1,
 	DirectWriteRetain = 2,
@@ -523,7 +527,8 @@ enum class EOLAnnotationVisible {
 	Angles = 0x122,
 };
 
-enum class Supports {
+enum class Supports 
+{
 	LineDrawsFinal = 0,
 	PixelDivisions = 1,
 	FractionalStrokeWidth = 2,
@@ -572,7 +577,8 @@ enum class ModificationFlags {
 	EventMaskAll = 0x7FFFFF,
 };
 
-enum class Update {
+enum class Update 
+{
 	None = 0x0,
 	Content = 0x1,
 	Selection = 0x2,

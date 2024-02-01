@@ -114,16 +114,20 @@ constexpr unsigned char TrailByteValue(unsigned char c) {
 	return c & 0b0011'1111;
 }
 
-size_t UTF16FromUTF8(std::string_view svu8, wchar_t *tbuf, size_t tlen) {
+size_t UTF16FromUTF8(std::string_view svu8, wchar_t *tbuf, size_t tlen) 
+{
 	size_t ui = 0;
-	for (size_t i = 0; i < svu8.length();) {
+	for (size_t i = 0; i < svu8.length();) 
+	{
 		unsigned char ch = svu8[i];
 		const unsigned int byteCount = UTF8BytesOfLead[ch];
 		unsigned int value;
 
-		if (i + byteCount > svu8.length()) {
+		if (i + byteCount > svu8.length()) 
+		{
 			// Trying to read past end but still have space to write
-			if (ui < tlen) {
+			if (ui < tlen) 
+			{
 				tbuf[ui] = ch;
 				ui++;
 			}

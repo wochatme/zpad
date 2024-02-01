@@ -325,8 +325,8 @@ namespace Scintilla::Internal {
 
 /**
  */
-class ScintillaWin :
-	public ScintillaBase {
+class ScintillaWin : public ScintillaBase 
+{
 
 	bool lastKeyDownConsumed;
 	wchar_t lastHighSurrogateChar;
@@ -397,10 +397,8 @@ class ScintillaWin :
 		    sptr_t ptr, UINT iMessage, uptr_t wParam, sptr_t lParam);
 	static sptr_t DirectStatusFunction(
 		    sptr_t ptr, UINT iMessage, uptr_t wParam, sptr_t lParam, int *pStatus);
-	static LRESULT PASCAL SWndProc(
-		    HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
-	static LRESULT PASCAL CTWndProc(
-		    HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
+	static LRESULT PASCAL SWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
+	static LRESULT PASCAL CTWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 
 	enum : UINT_PTR { invalidTimerID, standardTimerID, idleTimerID, fineTimerStart };
 
@@ -550,8 +548,8 @@ HINSTANCE ScintillaWin::hInstance {};
 ATOM ScintillaWin::scintillaClassAtom = 0;
 ATOM ScintillaWin::callClassAtom = 0;
 
-ScintillaWin::ScintillaWin(HWND hwnd) {
-
+ScintillaWin::ScintillaWin(HWND hwnd) 
+{
 	lastKeyDownConsumed = false;
 	lastHighSurrogateChar = 0;
 
@@ -693,12 +691,16 @@ D2D1_SIZE_U GetSizeUFromRect(const RECT &rc, const int scaleFactor) noexcept {
 
 }
 
-void ScintillaWin::EnsureRenderTarget(HDC hdc) {
-	if (!renderTargetValid) {
+void ScintillaWin::EnsureRenderTarget(HDC hdc) 
+{
+	if (!renderTargetValid) 
+	{
 		DropRenderTarget();
 		renderTargetValid = true;
 	}
-	if (!pRenderTarget) {
+
+	if (!pRenderTarget) 
+	{
 		HWND hw = MainHWND();
 		RECT rc;
 		::GetClientRect(hw, &rc);
@@ -709,7 +711,8 @@ void ScintillaWin::EnsureRenderTarget(HDC hdc) {
 		drtp.usage = D2D1_RENDER_TARGET_USAGE_NONE;
 		drtp.minLevel = D2D1_FEATURE_LEVEL_DEFAULT;
 
-		if (technology == Technology::DirectWriteDC) {
+		if (technology == Technology::DirectWriteDC) 
+		{
 			drtp.dpiX = 96.f;
 			drtp.dpiY = 96.f;
 			// Explicit pixel format needed.
@@ -725,7 +728,9 @@ void ScintillaWin::EnsureRenderTarget(HDC hdc) {
 				pRenderTarget = nullptr;
 			}
 
-		} else {
+		} 
+		else 
+		{
 			const int integralDeviceScaleFactor = GetFirstIntegralMultipleDeviceScaleFactor();
 			drtp.dpiX = 96.f * integralDeviceScaleFactor;
 			drtp.dpiY = 96.f * integralDeviceScaleFactor;
@@ -740,9 +745,12 @@ void ScintillaWin::EnsureRenderTarget(HDC hdc) {
 
 			ID2D1HwndRenderTarget *pHwndRenderTarget = nullptr;
 			const HRESULT hr = pD2DFactory->CreateHwndRenderTarget(drtp, dhrtp, &pHwndRenderTarget);
-			if (SUCCEEDED(hr)) {
+			if (SUCCEEDED(hr)) 
+			{
 				pRenderTarget = pHwndRenderTarget;
-			} else {
+			} 
+			else 
+			{
 				Platform::DebugPrintf("Failed CreateHwndRenderTarget 0x%lx\n", hr);
 				pRenderTarget = nullptr;
 			}
@@ -752,11 +760,14 @@ void ScintillaWin::EnsureRenderTarget(HDC hdc) {
 		DropGraphics();
 	}
 
-	if ((technology == Technology::DirectWriteDC) && pRenderTarget) {
+	if ((technology == Technology::DirectWriteDC) && pRenderTarget) 
+	{
 		RECT rcWindow;
 		::GetClientRect(MainHWND(), &rcWindow);
+
 		const HRESULT hr = static_cast<ID2D1DCRenderTarget*>(pRenderTarget)->BindDC(hdc, &rcWindow);
-		if (FAILED(hr)) {
+		if (FAILED(hr)) 
+		{
 			Platform::DebugPrintf("BindDC failed 0x%lx\n", hr);
 			DropRenderTarget();
 		}
@@ -764,7 +775,8 @@ void ScintillaWin::EnsureRenderTarget(HDC hdc) {
 }
 #endif
 
-void ScintillaWin::DropRenderTarget() noexcept {
+void ScintillaWin::DropRenderTarget() noexcept 
+{
 #if defined(USE_D2D)
 	ReleaseUnknown(pRenderTarget);
 #endif
@@ -1016,15 +1028,21 @@ bool ScintillaWin::PaintDC(HDC hdc)
 	{
 #if defined(USE_D2D)
 		EnsureRenderTarget(hdc);
-		if (pRenderTarget) {
+		if (pRenderTarget) 
+		{
 			AutoSurface surfaceWindow(pRenderTarget, this);
-			if (surfaceWindow) {
+			if (surfaceWindow) 
+			{
 				SetRenderingParams(surfaceWindow);
 				pRenderTarget->BeginDraw();
+
 				Paint(surfaceWindow, rcPaint);
+
 				surfaceWindow->Release();
+				
 				const HRESULT hr = pRenderTarget->EndDraw();
-				if (hr == static_cast<HRESULT>(D2DERR_RECREATE_TARGET)) {
+				if (hr == static_cast<HRESULT>(D2DERR_RECREATE_TARGET)) 
+				{
 					DropRenderTarget();
 					return false;
 				}
@@ -1036,7 +1054,7 @@ bool ScintillaWin::PaintDC(HDC hdc)
 	return true;
 }
 
-sptr_t ScintillaWin::WndPaint() /// the handle to WM_PAINT
+sptr_t ScintillaWin::WndPaint() ///- the handle to WM_PAINT
 {
 	//ElapsedPeriod ep;
 
@@ -1053,7 +1071,9 @@ sptr_t ScintillaWin::WndPaint() /// the handle to WM_PAINT
 	rcPaint = PRectangle::FromInts(ps.rcPaint.left, ps.rcPaint.top, ps.rcPaint.right, ps.rcPaint.bottom);
 	const PRectangle rcClient = GetClientRectangle();
 	paintingAllText = BoundsContains(rcPaint, hRgnUpdate, rcClient);
-	if (!PaintDC(ps.hdc)) {
+	
+	if (!PaintDC(ps.hdc)) ///- main paint logic is here!
+	{
 		paintState = PaintState::abandoned;
 	}
 	if (hRgnUpdate) {
@@ -1345,7 +1365,7 @@ sptr_t ScintillaWin::HandleCompositionInline(uptr_t, sptr_t lParam) {
 namespace {
 
 // Translate message IDs from WM_* and EM_* to Message::* so can partly emulate Windows Edit control
-Message SciMessageFromEM(unsigned int iMessage) noexcept /// just lookup 
+Message SciMessageFromEM(unsigned int iMessage) noexcept ///- just lookup 
 {
 	switch (iMessage) 
 	{
@@ -1539,7 +1559,8 @@ sptr_t ScintillaWin::ShowContextMenu(unsigned int iMessage, uptr_t wParam, sptr_
 	return ::DefWindowProc(MainHWND(), iMessage, wParam, lParam);
 }
 
-PRectangle ScintillaWin::GetClientRectangle() const {
+PRectangle ScintillaWin::GetClientRectangle() const 
+{
 	return rectangleClient;
 }
 
@@ -1672,11 +1693,13 @@ sptr_t ScintillaWin::MouseMessage(unsigned int iMessage, uptr_t wParam, sptr_t l
 	return 0;
 }
 
-sptr_t ScintillaWin::KeyMessage(unsigned int iMessage, uptr_t wParam, sptr_t lParam) {
-	switch (iMessage) {
-
+sptr_t ScintillaWin::KeyMessage(unsigned int iMessage, uptr_t wParam, sptr_t lParam) 
+{
+	switch (iMessage) 
+	{
 	case WM_SYSKEYDOWN:
-	case WM_KEYDOWN: {
+	case WM_KEYDOWN: 
+		{
 			// Platform::DebugPrintf("Keydown %c %c%c%c%c %x %x\n",
 			// iMessage == WM_KEYDOWN ? 'K' : 'S',
 			// (lParam & (1 << 24)) ? 'E' : '-',
@@ -1934,8 +1957,10 @@ sptr_t ScintillaWin::IdleMessage(unsigned int iMessage, uptr_t wParam, sptr_t lP
 	return 0;
 }
 
-sptr_t ScintillaWin::SciMessage(Message iMessage, uptr_t wParam, sptr_t lParam) {
-	switch (iMessage) {
+sptr_t ScintillaWin::SciMessage(Message iMessage, uptr_t wParam, sptr_t lParam) 
+{
+	switch (iMessage) 
+	{
 	case Message::GetDirectFunction:
 		return reinterpret_cast<sptr_t>(DirectFunction);
 
@@ -1943,7 +1968,7 @@ sptr_t ScintillaWin::SciMessage(Message iMessage, uptr_t wParam, sptr_t lParam) 
 		return reinterpret_cast<sptr_t>(DirectStatusFunction);
 
 	case Message::GetDirectPointer:
-		return reinterpret_cast<sptr_t>(this);
+		return reinterpret_cast<sptr_t>(this); ///- return the object pointer of this
 
 	case Message::GrabFocus:
 		::SetFocus(MainHWND());
@@ -2010,13 +2035,14 @@ sptr_t ScintillaWin::SciMessage(Message iMessage, uptr_t wParam, sptr_t lParam) 
 	return 0;
 }
 
-sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) /// the real window message process function
+sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) ///- the real window message process function
 {
-	try {
+	try 
+	{
 		//Platform::DebugPrintf("S M:%x WP:%x L:%x\n", iMessage, wParam, lParam);
 		const unsigned int msg = static_cast<unsigned int>(iMessage);
-		switch (msg) {
-
+		switch (msg) 
+		{
 		case WM_CREATE:
 			ctrlID = ::GetDlgCtrlID(HwndFromWindow(wMain));
 			UpdateBaseElements();
@@ -2032,9 +2058,11 @@ sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) ///
 		case WM_PAINT:
 			return WndPaint();
 
-		case WM_PRINTCLIENT: {
+		case WM_PRINTCLIENT: 
+			{
 				HDC hdc = reinterpret_cast<HDC>(wParam);
-				if (!IsCompatibleDC(hdc)) {
+				if (!IsCompatibleDC(hdc)) 
+				{
 					return ::DefWindowProc(MainHWND(), msg, wParam, lParam);
 				}
 				FullPaintDC(hdc);
@@ -2054,9 +2082,11 @@ sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) ///
 			break;
 
 		case WM_TIMER:
-			if (wParam == idleTimerID && idler.state) {
+			if (wParam == idleTimerID && idler.state) 
+			{
 				SendMessage(MainHWND(), SC_WIN_IDLE, 0, 1);
-			} else {
+			} else 
+			{
 				TickFor(static_cast<TickReason>(wParam - fineTimerStart));
 			}
 			break;
@@ -2078,16 +2108,21 @@ sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) ///
 			return MouseMessage(msg, wParam, lParam);
 
 		case WM_SETCURSOR:
-			if (LOWORD(lParam) == HTCLIENT) {
-				if (!cursorIsHidden) {
+			if (LOWORD(lParam) == HTCLIENT) 
+			{
+				if (!cursorIsHidden) 
+				{
 					POINT pt;
-					if (::GetCursorPos(&pt)) {
+					if (::GetCursorPos(&pt)) 
+					{
 						::ScreenToClient(MainHWND(), &pt);
 						DisplayCursor(ContextCursor(PointFromPOINT(pt)));
 					}
 				}
 				return TRUE;
-			} else {
+			} 
+			else 
+			{
 				return ::DefWindowProc(MainHWND(), msg, wParam, lParam);
 			}
 
@@ -2101,7 +2136,8 @@ sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) ///
 		case WM_SETTINGCHANGE:
 			//Platform::DebugPrintf("Setting Changed\n");
 #if defined(USE_D2D)
-			if (technology != Technology::Default) {
+			if (technology != Technology::Default) 
+			{
 				UpdateRenderingParams(true);
 			}
 #endif
@@ -2129,9 +2165,11 @@ sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) ///
 			InvalidateStyleRedraw();
 			break;
 
-		case WM_DPICHANGED_AFTERPARENT: {
+		case WM_DPICHANGED_AFTERPARENT: 
+			{
 				const UINT dpiNow = DpiForWindow(wMain.GetID());
-				if (dpi != dpiNow) {
+				if (dpi != dpiNow) 
+				{
 					dpi = dpiNow;
 					InvalidateStyleRedraw();
 				}
@@ -2146,7 +2184,8 @@ sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) ///
 
 		case WM_SETREDRAW:
 			::DefWindowProc(MainHWND(), msg, wParam, lParam);
-			if (wParam) {
+			if (wParam) 
+			{
 				SetScrollBars();
 				SetVerticalScrollPos();
 				SetHorizontalScrollPos();
@@ -2173,8 +2212,10 @@ sptr_t ScintillaWin::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) ///
 
 		case WM_WINDOWPOSCHANGED:
 #if defined(USE_D2D)
-			if (technology != Technology::Default) {
-				if (UpdateRenderingParams(false)) {
+			if (technology != Technology::Default) 
+			{
+				if (UpdateRenderingParams(false)) 
+				{
 					DropGraphics();
 					Redraw();
 				}
@@ -2266,22 +2307,27 @@ bool ScintillaWin::FineTickerRunning(TickReason reason) {
 	return timers[static_cast<size_t>(reason)] != 0;
 }
 
-void ScintillaWin::FineTickerStart(TickReason reason, int millis, int tolerance) {
+void ScintillaWin::FineTickerStart(TickReason reason, int millis, int tolerance) 
+{
 	FineTickerCancel(reason);
 	const UINT_PTR reasonIndex = static_cast<UINT_PTR>(reason);
 	const UINT_PTR eventID = static_cast<UINT_PTR>(fineTimerStart) + reasonIndex;
-	if (SetCoalescableTimerFn && tolerance) {
+	
+	if (SetCoalescableTimerFn && tolerance) 
+	{
 		timers[reasonIndex] = SetCoalescableTimerFn(MainHWND(), eventID, millis, nullptr, tolerance);
 	} else {
 		timers[reasonIndex] = ::SetTimer(MainHWND(), eventID, millis, nullptr);
 	}
 }
 
-void ScintillaWin::FineTickerCancel(TickReason reason) {
+void ScintillaWin::FineTickerCancel(TickReason reason) 
+{
 	const UINT_PTR reasonIndex = static_cast<UINT_PTR>(reason);
-	if (timers[reasonIndex]) {
+	if (timers[reasonIndex]) 
+	{
 		::KillTimer(MainHWND(), timers[reasonIndex]);
-		timers[reasonIndex] = 0;
+		timers[reasonIndex] = 0; ///- set it to null
 	}
 }
 
@@ -2391,14 +2437,18 @@ void ScintillaWin::NotifyCaretMove() {
 	NotifyWinEvent(EVENT_OBJECT_LOCATIONCHANGE, MainHWND(), OBJID_CARET, CHILDID_SELF);
 }
 
-void ScintillaWin::UpdateSystemCaret() {
-	if (hasFocus) {
-		if (pdoc->TentativeActive()) {
+void ScintillaWin::UpdateSystemCaret() 
+{
+	if (hasFocus) 
+	{
+		if (pdoc->TentativeActive()) 
+		{
 			// ongoing inline mode IME composition, don't inform IME of system caret position.
 			// fix candidate window for Google Japanese IME moved on typing on Win7.
 			return;
 		}
-		if (HasCaretSizeChanged()) {
+		if (HasCaretSizeChanged()) 
+		{
 			DestroySystemCaret();
 			CreateSystemCaret();
 		}
@@ -3568,16 +3618,22 @@ bool ScintillaWin::Register(HINSTANCE hInstance_) noexcept
 	return result;
 }
 
-bool ScintillaWin::Unregister() noexcept {
+bool ScintillaWin::Unregister() noexcept 
+{
 	bool result = true;
-	if (0 != scintillaClassAtom) {
-		if (::UnregisterClass(MAKEINTATOM(scintillaClassAtom), hInstance) == 0) {
+
+	if (0 != scintillaClassAtom) 
+	{
+		if (::UnregisterClass(MAKEINTATOM(scintillaClassAtom), hInstance) == 0) 
+		{
 			result = false;
 		}
 		scintillaClassAtom = 0;
 	}
-	if (0 != callClassAtom) {
-		if (::UnregisterClass(MAKEINTATOM(callClassAtom), hInstance) == 0) {
+	if (0 != callClassAtom) 
+	{
+		if (::UnregisterClass(MAKEINTATOM(callClassAtom), hInstance) == 0) 
+		{
 			result = false;
 		}
 		callClassAtom = 0;
@@ -3585,67 +3641,84 @@ bool ScintillaWin::Unregister() noexcept {
 	return result;
 }
 
-bool ScintillaWin::HasCaretSizeChanged() const noexcept {
-	if (
-		( (0 != vs.caret.width) && (sysCaretWidth != vs.caret.width) )
+bool ScintillaWin::HasCaretSizeChanged() const noexcept 
+{
+	if (( (0 != vs.caret.width) && (sysCaretWidth != vs.caret.width) )
 		|| ((0 != vs.lineHeight) && (sysCaretHeight != vs.lineHeight))
-		) {
+		) 
+	{
 		return true;
 	}
+
 	return false;
 }
 
-BOOL ScintillaWin::CreateSystemCaret() {
+BOOL ScintillaWin::CreateSystemCaret() 
+{
 	sysCaretWidth = vs.caret.width;
-	if (0 == sysCaretWidth) {
+	if (0 == sysCaretWidth) 
+	{
 		sysCaretWidth = 1;
 	}
+
 	sysCaretHeight = vs.lineHeight;
-	const int bitmapSize = (((sysCaretWidth + 15) & ~15) >> 3) *
-		sysCaretHeight;
+	const int bitmapSize = (((sysCaretWidth + 15) & ~15) >> 3) * sysCaretHeight;
 	std::vector<BYTE> bits(bitmapSize);
-	sysCaretBitmap = ::CreateBitmap(sysCaretWidth, sysCaretHeight, 1,
-		1, &bits[0]);
+	sysCaretBitmap = ::CreateBitmap(sysCaretWidth, sysCaretHeight, 1, 1, &bits[0]);
+	
 	const BOOL retval = ::CreateCaret(
 		MainHWND(), sysCaretBitmap,
-		sysCaretWidth, sysCaretHeight);
-	if (technology == Technology::Default) {
+		sysCaretWidth, sysCaretHeight); ///- Win32 API
+
+	if (technology == Technology::Default) 
+	{
 		// System caret interferes with Direct2D drawing so only show it for GDI.
 		::ShowCaret(MainHWND());
 	}
 	return retval;
 }
 
-BOOL ScintillaWin::DestroySystemCaret() noexcept {
+BOOL ScintillaWin::DestroySystemCaret() noexcept 
+{
 	::HideCaret(MainHWND());
 	const BOOL retval = ::DestroyCaret();
-	if (sysCaretBitmap) {
+	if (sysCaretBitmap) 
+	{
 		::DeleteObject(sysCaretBitmap);
 		sysCaretBitmap = {};
 	}
 	return retval;
 }
 
-LRESULT PASCAL ScintillaWin::CTWndProc(
-	HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
+LRESULT PASCAL ScintillaWin::CTWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) ///- Main WndProc
+{
 	// Find C++ object associated with window.
 	ScintillaWin *sciThis = static_cast<ScintillaWin *>(PointerFromWindow(hWnd));
 	try {
 		// ctp will be zero if WM_CREATE not seen yet
-		if (sciThis == nullptr) {
-			if (iMessage == WM_CREATE) {
+		if (sciThis == nullptr) 
+		{
+			if (iMessage == WM_CREATE) 
+			{
 				// Associate CallTip object with window
 				CREATESTRUCT *pCreate = static_cast<CREATESTRUCT *>(PtrFromSPtr(lParam));
 				SetWindowPointer(hWnd, pCreate->lpCreateParams);
 				return 0;
-			} else {
+			} 
+			else 
+			{
 				return ::DefWindowProc(hWnd, iMessage, wParam, lParam);
 			}
-		} else {
-			if (iMessage == WM_NCDESTROY) {
+		} 
+		else 
+		{
+			if (iMessage == WM_NCDESTROY) 
+			{
 				SetWindowPointer(hWnd, nullptr);
 				return ::DefWindowProc(hWnd, iMessage, wParam, lParam);
-			} else if (iMessage == WM_PAINT) {
+			} 
+			else if (iMessage == WM_PAINT) 
+			{
 				PAINTSTRUCT ps;
 				::BeginPaint(hWnd, &ps);
 				std::unique_ptr<Surface> surfaceWindow(Surface::Allocate(sciThis->technology));
@@ -3654,9 +3727,12 @@ LRESULT PASCAL ScintillaWin::CTWndProc(
 #endif
 				RECT rc;
 				GetClientRect(hWnd, &rc);
-				if (sciThis->technology == Technology::Default) {
+				if (sciThis->technology == Technology::Default) 
+				{
 					surfaceWindow->Init(ps.hdc, hWnd);
-				} else {
+				} 
+				else 
+				{
 #if defined(USE_D2D)
 					const int scaleFactor = sciThis->GetFirstIntegralMultipleDeviceScaleFactor();
 
@@ -3676,14 +3752,16 @@ LRESULT PASCAL ScintillaWin::CTWndProc(
 					drtp.usage = D2D1_RENDER_TARGET_USAGE_NONE;
 					drtp.minLevel = D2D1_FEATURE_LEVEL_DEFAULT;
 
-					if (!SUCCEEDED(pD2DFactory->CreateHwndRenderTarget(drtp, dhrtp, &pCTRenderTarget))) {
+					if (!SUCCEEDED(pD2DFactory->CreateHwndRenderTarget(drtp, dhrtp, &pCTRenderTarget))) 
+					{
 						surfaceWindow->Release();
 						::EndPaint(hWnd, &ps);
 						return 0;
 					}
 					// If above SUCCEEDED, then pCTRenderTarget not nullptr
 					assert(pCTRenderTarget);
-					if (pCTRenderTarget) {
+					if (pCTRenderTarget) 
+					{
 						surfaceWindow->Init(pCTRenderTarget, hWnd);
 						pCTRenderTarget->BeginDraw();
 					}
@@ -3692,51 +3770,66 @@ LRESULT PASCAL ScintillaWin::CTWndProc(
 				surfaceWindow->SetMode(sciThis->CurrentSurfaceMode());
 				sciThis->SetRenderingParams(surfaceWindow.get());
 				sciThis->ct.PaintCT(surfaceWindow.get());
+
 #if defined(USE_D2D)
 				if (pCTRenderTarget)
 					pCTRenderTarget->EndDraw();
 #endif
+
 				surfaceWindow->Release();
 #if defined(USE_D2D)
 				ReleaseUnknown(pCTRenderTarget);
 #endif
 				::EndPaint(hWnd, &ps);
 				return 0;
-			} else if ((iMessage == WM_NCLBUTTONDOWN) || (iMessage == WM_NCLBUTTONDBLCLK)) {
+			} 
+			else if ((iMessage == WM_NCLBUTTONDOWN) || (iMessage == WM_NCLBUTTONDBLCLK)) 
+			{
 				POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
 				ScreenToClient(hWnd, &pt);
 				sciThis->ct.MouseClick(PointFromPOINT(pt));
 				sciThis->CallTipClick();
 				return 0;
-			} else if (iMessage == WM_LBUTTONDOWN) {
+			} 
+			else if (iMessage == WM_LBUTTONDOWN) 
+			{
 				// This does not fire due to the hit test code
 				sciThis->ct.MouseClick(PointFromLParam(lParam));
 				sciThis->CallTipClick();
 				return 0;
-			} else if (iMessage == WM_SETCURSOR) {
+			} 
+			else if (iMessage == WM_SETCURSOR) 
+			{
 				::SetCursor(::LoadCursor(NULL, IDC_ARROW));
 				return 0;
-			} else if (iMessage == WM_NCHITTEST) {
+			} 
+			else if (iMessage == WM_NCHITTEST) 
+			{
 				return HTCAPTION;
-			} else {
+			} 
+			else 
+			{
 				return ::DefWindowProc(hWnd, iMessage, wParam, lParam);
 			}
 		}
-	} catch (...) {
+	} 
+	catch (...) 
+	{
 		sciThis->errorStatus = Status::Failure;
 	}
+
 	return ::DefWindowProc(hWnd, iMessage, wParam, lParam);
 }
 
-sptr_t ScintillaWin::DirectFunction(sptr_t ptr, UINT iMessage, uptr_t wParam, sptr_t lParam) /// direct call 
+sptr_t ScintillaWin::DirectFunction(sptr_t ptr, UINT iMessage, uptr_t wParam, sptr_t lParam) ///- direct call 
 {
 	ScintillaWin *sci = reinterpret_cast<ScintillaWin *>(ptr);
 	PLATFORM_ASSERT(::GetCurrentThreadId() == ::GetWindowThreadProcessId(sci->MainHWND(), nullptr));
 	return sci->WndProc(static_cast<Message>(iMessage), wParam, lParam);
 }
 
-sptr_t ScintillaWin::DirectStatusFunction(
-    sptr_t ptr, UINT iMessage, uptr_t wParam, sptr_t lParam, int *pStatus) {
+sptr_t ScintillaWin::DirectStatusFunction(sptr_t ptr, UINT iMessage, uptr_t wParam, sptr_t lParam, int *pStatus) 
+{
 	ScintillaWin *sci = reinterpret_cast<ScintillaWin *>(ptr);
 	PLATFORM_ASSERT(::GetCurrentThreadId() == ::GetWindowThreadProcessId(sci->MainHWND(), nullptr));
 	const sptr_t returnValue = sci->WndProc(static_cast<Message>(iMessage), wParam, lParam);
@@ -3746,23 +3839,26 @@ sptr_t ScintillaWin::DirectStatusFunction(
 
 namespace Scintilla::Internal {
 
-sptr_t DirectFunction(
-    ScintillaWin *sci, UINT iMessage, uptr_t wParam, sptr_t lParam) {
+sptr_t DirectFunction(ScintillaWin *sci, UINT iMessage, uptr_t wParam, sptr_t lParam) 
+{
 	return sci->WndProc(static_cast<Message>(iMessage), wParam, lParam);
 }
 
 }
 
-LRESULT PASCAL ScintillaWin::SWndProc(
-	HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) {
+LRESULT PASCAL ScintillaWin::SWndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam) ///- the entry point of message process function
+{
 	//Platform::DebugPrintf("S W:%x M:%x WP:%x L:%x\n", hWnd, iMessage, wParam, lParam);
 
 	// Find C++ object associated with window.
 	ScintillaWin *sci = static_cast<ScintillaWin *>(PointerFromWindow(hWnd));
 	// sci will be zero if WM_CREATE not seen yet
-	if (sci == nullptr) {
-		try {
-			if (iMessage == WM_CREATE) {
+	if (sci == nullptr) 
+	{
+		try 
+		{
+			if (iMessage == WM_CREATE) 
+			{
 				static std::once_flag once;
 				std::call_once(once, Prepare);
 				// Create C++ object associated with window
@@ -3770,20 +3866,30 @@ LRESULT PASCAL ScintillaWin::SWndProc(
 				SetWindowPointer(hWnd, sci);
 				return sci->WndProc(static_cast<Message>(iMessage), wParam, lParam);
 			}
-		} catch (...) {
+		} 
+		catch (...) 
+		{
 		}
 		return ::DefWindowProc(hWnd, iMessage, wParam, lParam);
-	} else {
-		if (iMessage == WM_NCDESTROY) {
-			try {
+	} 
+	else 
+	{
+		if (iMessage == WM_NCDESTROY) 
+		{
+			try 
+			{
 				sci->Finalise();
 				delete sci;
-			} catch (...) {
+			} 
+			catch (...) 
+			{
 			}
 			SetWindowPointer(hWnd, nullptr);
 			return ::DefWindowProc(hWnd, iMessage, wParam, lParam);
-		} else {
-			return sci->WndProc(static_cast<Message>(iMessage), wParam, lParam);
+		} 
+		else 
+		{
+			return sci->WndProc(static_cast<Message>(iMessage), wParam, lParam); ///- main logic is here!
 		}
 	}
 }
@@ -3795,9 +3901,10 @@ extern "C" int Scintilla_RegisterClasses(void *hInstance) {
 	return result;
 }
 
-namespace Scintilla::Internal {
-
-int ResourcesRelease(bool fromDllMain) noexcept {
+namespace Scintilla::Internal 
+{
+int ResourcesRelease(bool fromDllMain) noexcept 
+{
 	const bool result = ScintillaWin::Unregister();
 	Platform_Finalise(fromDllMain);
 	return result;

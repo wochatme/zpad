@@ -17,7 +17,8 @@ typedef double XYACCUMULATOR;
  * A geometric point class.
  * Point is similar to the Win32 POINT and GTK+ GdkPoint types.
  */
-class Point {
+class Point 
+{
 public:
 	XYPOSITION x;
 	XYPOSITION y;
@@ -25,7 +26,8 @@ public:
 	constexpr explicit Point(XYPOSITION x_=0, XYPOSITION y_=0) noexcept : x(x_), y(y_) {
 	}
 
-	static constexpr Point FromInts(int x_, int y_) noexcept {
+	static constexpr Point FromInts(int x_, int y_) noexcept 
+	{
 		return Point(static_cast<XYPOSITION>(x_), static_cast<XYPOSITION>(y_));
 	}
 
@@ -76,7 +78,8 @@ public:
  * PRectangle is similar to Win32 RECT.
  * PRectangles contain their top and left sides, but not their right and bottom sides.
  */
-class PRectangle {
+class PRectangle 
+{
 public:
 	XYPOSITION left;
 	XYPOSITION top;

@@ -117,7 +117,8 @@ MarginView::MarginView() noexcept {
 	customDrawWrapMarker = nullptr;
 }
 
-void MarginView::DropGraphics() noexcept {
+void MarginView::DropGraphics() noexcept 
+{
 	pixmapSelMargin.reset();
 	pixmapSelPattern.reset();
 	pixmapSelPatternOffset1.reset();

@@ -11,12 +11,14 @@
 #include "resource.h"
 #include "ZPad.h"
 
-#include "notepad2.h"
+#include "scicall.h"
+
+#include "notepad3.h"
 #include "styles.h"
 #include "edit.h"
 #include "helpers.h"
 
-#include "View.h"
+// #include "View.h"
 #include "aboutdlg.h"
 #include "MainFrm.h"
 
@@ -26,8 +28,8 @@ extern "C"
 {
 	U64			g_statusU64 = ZPAD_STATUS_NONE;
 	HINSTANCE	g_hInstance = nullptr;
-	int			(*g_fnScintilla)(void*, int, int, int) = nullptr;
-	void* g_ptrScintilla = nullptr;
+	U64			(*g_fnScintilla)(void*, UINT, WPARAM, LPARAM) = nullptr;
+	void*		g_ptrScintilla = nullptr;
 }
 
 class CZPadThreadManager
@@ -167,9 +169,9 @@ static void TermApplication(HINSTANCE hInstance)
 
 extern "C"
 {
-	int SendScintillaMessage(int sciMsg, int wParam, int lParam)
+	U64 SendScintillaMessage(UINT sciMsg, WPARAM wParam, LPARAM lParam)
 	{
-		int iRet = 0;
+		U64 iRet = 0;
 
 		if (g_fnScintilla != nullptr && g_ptrScintilla != nullptr)
 		{
@@ -182,6 +184,13 @@ extern "C"
 
 int WINAPI _tWinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lpstrCmdLine, int nCmdShow)
 {
+	UNREFERENCED_PARAMETER(lpstrCmdLine);
+
+#if (defined(_DEBUG) || defined(DEBUG)) && !defined(NDEBUG)
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_CHECK_CRT_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetReportMode(_CRT_ASSERT, 0); // Disable the message box for assertions.
+#endif
+
 	g_hInstance = hInstance;
 
 	HRESULT hRes = ::CoInitialize(NULL);

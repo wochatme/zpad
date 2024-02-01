@@ -12,16 +12,18 @@ namespace Scintilla::Internal {
 
 /**
 */
-class Caret {
+class Caret 
+{
 public:
 	bool active;
 	bool on;
-	int period;
+	int period; ///- in ms
 
 	Caret() noexcept;
 };
 
-class EditModel {
+class EditModel 
+{
 public:
 	bool inOverstrike;
 	int xOffset;		///< Horizontal scrolled amount in pixels

@@ -180,7 +180,8 @@ constexpr XYScrollOptions operator|(XYScrollOptions a, XYScrollOptions b) noexce
 
 /**
  */
-class Editor : public EditModel, public DocWatcher {
+class Editor : public EditModel, public DocWatcher 
+{
 protected:	// ScintillaBase subclass needs access to much of Editor
 
 	/** On GTK+, Scintilla is a container widget holding two scroll bars
@@ -542,7 +543,16 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void ButtonUpWithModifiers(Point pt, unsigned int curTime, Scintilla::KeyMod modifiers);
 
 	bool Idle();
-	enum class TickReason { caret, scroll, widen, dwell, platform };
+
+	enum class TickReason 
+	{ 
+		caret,	///- 0
+		scroll, ///- 1
+		widen,  ///- 2
+		dwell,  ///- 3
+		platform 
+	};
+
 	virtual void TickFor(TickReason reason);
 	virtual bool FineTickerRunning(TickReason reason);
 	virtual void FineTickerStart(TickReason reason, int millis, int tolerance);
@@ -618,7 +628,8 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void SetSelectionMode(uptr_t wParam, bool setMoveExtends);
 
 	// Coercion functions for transforming WndProc parameters into pointers
-	static void *PtrFromSPtr(Scintilla::sptr_t lParam) noexcept {
+	static void *PtrFromSPtr(Scintilla::sptr_t lParam) noexcept ///- convert to void*
+	{
 		return reinterpret_cast<void *>(lParam);
 	}
 	static const char *ConstCharPtrFromSPtr(Scintilla::sptr_t lParam) noexcept {
@@ -627,8 +638,9 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	static const unsigned char *ConstUCharPtrFromSPtr(Scintilla::sptr_t lParam) noexcept {
 		return static_cast<const unsigned char *>(PtrFromSPtr(lParam));
 	}
-	static char *CharPtrFromSPtr(Scintilla::sptr_t lParam) noexcept {
-		return static_cast<char *>(PtrFromSPtr(lParam));
+	static char *CharPtrFromSPtr(Scintilla::sptr_t lParam) noexcept 
+	{
+		return static_cast<char *>(PtrFromSPtr(lParam)); ///- conver to char*
 	}
 	static unsigned char *UCharPtrFromSPtr(Scintilla::sptr_t lParam) noexcept {
 		return static_cast<unsigned char *>(PtrFromSPtr(lParam));
@@ -699,15 +711,19 @@ public:
 /**
  * A smart pointer class to ensure Surfaces are set up and deleted correctly.
  */
-class AutoSurface {
+class AutoSurface 
+{
 private:
 	std::unique_ptr<Surface> surf;
+
 public:
 	AutoSurface(const Editor *ed) :
-		surf(ed->CreateMeasurementSurface())  {
-	}
+		surf(ed->CreateMeasurementSurface())  
+	{}
+
 	AutoSurface(SurfaceID sid, const Editor *ed, std::optional<Scintilla::Technology> technology = {}) :
-		surf(ed->CreateDrawingSurface(sid, technology)) {
+		surf(ed->CreateDrawingSurface(sid, technology)) 
+	{
 	}
 	// Deleted so AutoSurface objects can not be copied.
 	AutoSurface(const AutoSurface &) = delete;
@@ -716,10 +732,14 @@ public:
 	void operator=(AutoSurface &&) = delete;
 	~AutoSurface() {
 	}
-	Surface *operator->() const noexcept {
+	
+	Surface *operator->() const noexcept 
+	{
 		return surf.get();
 	}
-	operator Surface *() const noexcept {
+
+	operator Surface *() const noexcept 
+	{
 		return surf.get();
 	}
 };

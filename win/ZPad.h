@@ -32,10 +32,10 @@ extern "C" {
 
 	extern HINSTANCE g_hInstance;
 
-	extern int (*g_fnScintilla)(void*, int, int, int);
+	extern U64 (*g_fnScintilla)(void*, UINT, WPARAM, LPARAM);
 	extern void* g_ptrScintilla;
 
-	int SendScintillaMessage(int, int, int);
+	U64 SendScintillaMessage(UINT, WPARAM, LPARAM);
 
 #ifdef __cplusplus
 }

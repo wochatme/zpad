@@ -99,7 +99,8 @@ typedef void *IdlerID;
 
 constexpr const char *localeNameDefault = "en-us";
 
-struct FontParameters {
+struct FontParameters 
+{
 	const char *faceName;
 	XYPOSITION size;
 	Scintilla::FontWeight weight;
@@ -132,7 +133,8 @@ struct FontParameters {
 
 };
 
-class Font {
+class Font 
+{
 public:
 	Font() noexcept = default;
 	// Deleted so Font objects can not be copied
@@ -258,7 +260,8 @@ public:
  * Class to hide the details of window manipulation.
  * Does not own the window which will normally have a longer life than this object.
  */
-class Window {
+class Window 
+{
 protected:
 	WindowID wid;
 public:
@@ -284,7 +287,20 @@ public:
 	void Show(bool show=true);
 	void InvalidateAll();
 	void InvalidateRectangle(PRectangle rc);
-	enum class Cursor { invalid, text, arrow, up, wait, horizontal, vertical, reverseArrow, hand };
+	
+	enum class Cursor 
+	{ 
+		invalid, 
+		text, 
+		arrow, 
+		up, 
+		wait, 
+		horizontal, 
+		vertical, 
+		reverseArrow, 
+		hand 
+	};
+
 	void SetCursor(Cursor curs);
 	PRectangle GetMonitorRect(Point pt);
 private:
@@ -303,7 +319,8 @@ struct ListBoxEvent {
 	}
 };
 
-class IListBoxDelegate {
+class IListBoxDelegate 
+{
 public:
 	virtual void ListNotify(ListBoxEvent *plbe)=0;
 };
@@ -316,7 +333,8 @@ struct ListOptions {
 	AutoCompleteOption options=AutoCompleteOption::Normal;
 };
 
-class ListBox : public Window {
+class ListBox : public Window 
+{
 public:
 	ListBox() noexcept;
 	~ListBox() noexcept override;

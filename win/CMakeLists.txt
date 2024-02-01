@@ -4,7 +4,23 @@ project(zpad-win64 CXX)
 set(WOCHATAPP_DIR "${CMAKE_CURRENT_LIST_DIR}"
     CACHE PATH "ZPad application directory")
 
-add_executable(${PROJECT_NAME} WIN32 ZPad.cpp stdafx.cpp notepad2.c styles.c helpers.c edit.c dialogs.c dlapi.c print.cpp ZPad.rc)
+add_executable(${PROJECT_NAME} WIN32 
+	ZPad.cpp 
+	stdafx.cpp 
+	notepad3.c 
+	styles.c 
+	helpers.c 
+	edit.c 
+	dialogs.c 
+	dlapi.c 
+	encoding.c
+	pathlib.c
+	resample.c
+	print.cpp 
+	encodingdetection.cpp
+	stylelexers/editlexer.c
+	stylelexers/stylelexmarkdown.c
+	ZPad.rc)
 
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT zpad-win64)
 

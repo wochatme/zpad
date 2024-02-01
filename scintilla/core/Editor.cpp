@@ -220,7 +220,8 @@ void Editor::SetRepresentations() {
 	reprs.SetDefaultRepresentations(pdoc->dbcsCodePage);
 }
 
-void Editor::DropGraphics() noexcept {
+void Editor::DropGraphics() noexcept 
+{
 	marginView.DropGraphics();
 	view.DropGraphics();
 }
@@ -233,7 +234,8 @@ void Editor::InvalidateStyleData() noexcept {
 	view.posCache->Clear();
 }
 
-void Editor::InvalidateStyleRedraw() {
+void Editor::InvalidateStyleRedraw() 
+{
 	NeedWrapping();
 	InvalidateStyleData();
 	Redraw();
@@ -284,7 +286,8 @@ Point Editor::ClientSize() const {
 	return Point(rcClient.Width(), rcClient.Height());
 }
 
-PRectangle Editor::GetClientRectangle() const {
+PRectangle Editor::GetClientRectangle() const 
+{
 	return wMain.GetClientPosition();
 }
 
@@ -449,16 +452,21 @@ void Editor::DiscardOverdraw() {
 	// Overridden on platforms that may draw outside visible area.
 }
 
-void Editor::Redraw() {
-	if (redrawPendingText) {
+void Editor::Redraw() 
+{
+	if (redrawPendingText) 
+	{
 		return;
 	}
 	//Platform::DebugPrintf("Redraw all\n");
 	const PRectangle rcClient = GetClientRectangle();
 	wMain.InvalidateRectangle(rcClient);
-	if (HasMarginWindow()) {
+	if (HasMarginWindow()) 
+	{
 		wMargin.InvalidateAll();
-	} else if (paintState == PaintState::notPainting) {
+	} 
+	else if (paintState == PaintState::notPainting) 
+	{
 		redrawPendingText = true;
 	}
 }
@@ -1400,8 +1408,10 @@ void Editor::EnsureCaretVisible(bool useMargin, bool vert, bool horiz) {
 		caretPolicies));
 }
 
-void Editor::ShowCaretAtCurrentPosition() {
-	if (hasFocus) {
+void Editor::ShowCaretAtCurrentPosition() 
+{
+	if (hasFocus) 
+	{
 		caret.active = true;
 		caret.on = true;
 		FineTickerCancel(TickReason::caret);
@@ -1432,21 +1442,28 @@ void Editor::CaretSetPeriod(int period) {
 	}
 }
 
-void Editor::InvalidateCaret() {
-	if (posDrag.IsValid()) {
+void Editor::InvalidateCaret() 
+{
+	if (posDrag.IsValid()) 
+	{
 		InvalidateRange(posDrag.Position(), posDrag.Position() + 1);
-	} else {
-		for (size_t r=0; r<sel.Count(); r++) {
+	} 
+	else 
+	{
+		for (size_t r=0; r<sel.Count(); r++) 
+		{
 			InvalidateRange(sel.Range(r).caret.Position(), sel.Range(r).caret.Position() + 1);
 		}
 	}
 	UpdateSystemCaret();
 }
 
-void Editor::NotifyCaretMove() {
+void Editor::NotifyCaretMove() 
+{
 }
 
-void Editor::UpdateSystemCaret() {
+void Editor::UpdateSystemCaret() 
+{
 }
 
 bool Editor::Wrapping() const noexcept {
@@ -1811,7 +1828,8 @@ void Editor::RefreshPixMaps(Surface *surfaceWindow) {
 	}
 }
 
-void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
+void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) ///- main paint
+{
 	redrawPendingText = false;
 	redrawPendingMargin = false;
 
@@ -1831,16 +1849,19 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
 	//Platform::DebugPrintf("Client: (%3d,%3d) ... (%3d,%3d)   %d\n",
 	//	rcClient.left, rcClient.top, rcClient.right, rcClient.bottom);
 
-	if (NotifyUpdateUI()) {
+	if (NotifyUpdateUI()) 
+	{
 		RefreshStyleData();
 		RefreshPixMaps(surfaceWindow);
 	}
 
 	// Wrap the visible lines if needed.
-	if (WrapLines(WrapScope::wsVisible)) {
+	if (WrapLines(WrapScope::wsVisible)) 
+	{
 		// The wrapping process has changed the height of some lines so
 		// abandon this paint for a complete repaint.
-		if (AbandonPaint()) {
+		if (AbandonPaint()) 
+		{
 			return;
 		}
 		RefreshPixMaps(surfaceWindow);	// In case pixmaps invalidated by scrollbar change
@@ -1856,15 +1877,20 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
 	if (!view.bufferedDraw)
 		surfaceWindow->SetClip(rcArea);
 
-	if (paintState != PaintState::abandoned) {
-		if (vs.marginInside) {
+	if (paintState != PaintState::abandoned) 
+	{
+		if (vs.marginInside) 
+		{
 			PaintSelMargin(surfaceWindow, rcArea);
 			PRectangle rcRightMargin = rcClient;
 			rcRightMargin.left = rcRightMargin.right - vs.rightMarginWidth;
-			if (rcArea.Intersects(rcRightMargin)) {
+			if (rcArea.Intersects(rcRightMargin)) 
+			{
 				surfaceWindow->FillRectangle(rcRightMargin, vs.styles[StyleDefault].back);
 			}
-		} else { // Else separate view so separate paint event but leftMargin included to allow overlap
+		} 
+		else 
+		{ // Else separate view so separate paint event but leftMargin included to allow overlap
 			PRectangle rcLeftMargin = rcArea;
 			rcLeftMargin.left = 0;
 			rcLeftMargin.right = rcLeftMargin.left + vs.leftMarginWidth;
@@ -1874,12 +1900,15 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) {
 		}
 	}
 
-	if (paintState == PaintState::abandoned) {
+	if (paintState == PaintState::abandoned) 
+	{
 		// Either styling or NotifyUpdateUI noticed that painting is needed
 		// outside the current painting rectangle
 		//Platform::DebugPrintf("Abandoning paint\n");
-		if (Wrapping()) {
-			if (paintAbandonedByStyling) {
+		if (Wrapping()) 
+		{
+			if (paintAbandonedByStyling) 
+			{
 				// Styling has spilled over a line end, such as occurs by starting a multiline
 				// comment. The width of subsequent text may have changed, so rewrap.
 				NeedWrapping(pcs->DocFromDisplay(topLine));
@@ -2984,7 +3013,8 @@ void Editor::NotifyMacroRecord(Message iMessage, uptr_t wParam, sptr_t lParam) {
 }
 
 // Something has changed that the container should know about
-void Editor::ContainerNeedsUpdate(Update flags) noexcept {
+void Editor::ContainerNeedsUpdate(Update flags) noexcept 
+{
 	needUpdateUI = needUpdateUI | flags;
 }
 
@@ -4028,18 +4058,23 @@ int Editor::KeyCommand(Message iMessage) {
 	return 0;
 }
 
-int Editor::KeyDefault(Keys, KeyMod) {
+int Editor::KeyDefault(Keys, KeyMod) 
+{
 	return 0;
 }
 
-int Editor::KeyDownWithModifiers(Keys key, KeyMod modifiers, bool *consumed) {
+int Editor::KeyDownWithModifiers(Keys key, KeyMod modifiers, bool *consumed) 
+{
 	DwellEnd(false);
 	const Message msg = kmap.Find(key, modifiers);
-	if (msg != static_cast<Message>(0)) {
+	if (msg != static_cast<Message>(0)) 
+	{
 		if (consumed)
 			*consumed = true;
 		return static_cast<int>(WndProc(msg, 0, 0));
-	} else {
+	} 
+	else 
+	{
 		if (consumed)
 			*consumed = false;
 		return KeyDefault(key, modifiers);
@@ -5148,11 +5183,14 @@ bool Editor::Idle() {
 	return !idleDone;
 }
 
-void Editor::TickFor(TickReason reason) {
-	switch (reason) {
+void Editor::TickFor(TickReason reason) 
+{
+	switch (reason) 
+	{
 		case TickReason::caret:
-			caret.on = !caret.on;
-			if (caret.active) {
+			caret.on = !caret.on; ///- flip it
+			if (caret.active) 
+			{
 				InvalidateCaret();
 			}
 			break;
@@ -5165,8 +5203,8 @@ void Editor::TickFor(TickReason reason) {
 			FineTickerCancel(TickReason::widen);
 			break;
 		case TickReason::dwell:
-			if ((!HaveMouseCapture()) &&
-				(ptMouseLast.y >= 0)) {
+			if ((!HaveMouseCapture()) && (ptMouseLast.y >= 0)) 
+			{
 				dwelling = true;
 				NotifyDwelling(ptMouseLast, dwelling);
 			}
@@ -5193,7 +5231,8 @@ void Editor::FineTickerStart(TickReason, int, int) {
 
 // FineTickerCancel is be overridden by subclasses that support fine ticking so
 // this method should never be called.
-void Editor::FineTickerCancel(TickReason) {
+void Editor::FineTickerCancel(TickReason) 
+{
 	assert(false);
 }
 
@@ -5844,11 +5883,15 @@ std::unique_ptr<Surface> Editor::CreateMeasurementSurface() const {
 	return surf;
 }
 
-std::unique_ptr<Surface> Editor::CreateDrawingSurface(SurfaceID sid, std::optional<Scintilla::Technology> technologyOpt) const {
-	if (!wMain.GetID()) {
+std::unique_ptr<Surface> Editor::CreateDrawingSurface(SurfaceID sid, std::optional<Scintilla::Technology> technologyOpt) const 
+{
+	if (!wMain.GetID()) 
+	{
 		return {};
 	}
+	
 	std::unique_ptr<Surface> surf = Surface::Allocate(technologyOpt ? *technologyOpt : technology);
+	
 	surf->Init(sid, wMain.GetID());
 	surf->SetMode(CurrentSurfaceMode());
 	return surf;
@@ -6128,26 +6171,29 @@ sptr_t Editor::BytesResult(sptr_t lParam, const unsigned char *val, size_t len) 
 	return val ? len : 0;
 }
 
-sptr_t Editor::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
+sptr_t Editor::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) ///- The message handler of Edit
+{
 	//Platform::DebugPrintf("S start wnd proc %d %d %d\n",iMessage, wParam, lParam);
 
 	// Optional macro recording hook
 	if (recordingMacro)
 		NotifyMacroRecord(iMessage, wParam, lParam);
 
-	switch (iMessage) {
-
-	case Message::GetText: {
+	switch (iMessage) 
+	{
+	case Message::GetText: 
+		{
 			if (lParam == 0)
 				return pdoc->Length();
-			char *ptr = CharPtrFromSPtr(lParam);
+			char *ptr = CharPtrFromSPtr(lParam); ///- convert lParam to char*
 			const Sci_Position len = std::min<Sci_Position>(wParam, pdoc->Length());
-			pdoc->GetCharRange(ptr, 0, len);
+			pdoc->GetCharRange(ptr, 0, len); ///- get from 0
 			ptr[len] = '\0';
 			return len;
 		}
 
-	case Message::SetText: {
+	case Message::SetText: 
+		{
 			if (lParam == 0)
 				return 0;
 			UndoGroup ug(pdoc);
@@ -7003,7 +7049,8 @@ sptr_t Editor::WndProc(Message iMessage, uptr_t wParam, sptr_t lParam) {
 		return static_cast<sptr_t>(idleStyling);
 
 	case Message::SetWrapMode:
-		if (vs.SetWrapState(static_cast<Wrap>(wParam))) {
+		if (vs.SetWrapState(static_cast<Wrap>(wParam))) ///- if the old value is not the same as the new value, return true.
+		{
 			xOffset = 0;
 			ContainerNeedsUpdate(Update::HScroll);
 			InvalidateStyleRedraw();

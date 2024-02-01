@@ -680,7 +680,8 @@ bool ViewStyle::SetElementBase(Element element, ColourRGBA colour) {
 	return changed;
 }
 
-bool ViewStyle::SetWrapState(Wrap wrapState_) noexcept {
+bool ViewStyle::SetWrapState(Wrap wrapState_) noexcept 
+{
 	const bool changed = wrap.state != wrapState_;
 	wrap.state = wrapState_;
 	return changed;

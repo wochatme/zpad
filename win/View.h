@@ -2,6 +2,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
+#if 0
 #pragma once
 
 class CView : public CWindowImpl<CView>
@@ -33,3 +34,5 @@ public:
 		return 0;
 	}
 };
+
+#endif

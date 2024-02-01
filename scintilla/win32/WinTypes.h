@@ -9,30 +9,39 @@
 #ifndef WINTYPES_H
 #define WINTYPES_H
 
-namespace Scintilla::Internal {
+namespace Scintilla::Internal 
+{
 
 // Release an IUnknown* and set to nullptr.
 // While IUnknown::Release must be noexcept, it isn't marked as such so produces
 // warnings which are avoided by the catch.
 template <class T>
-inline void ReleaseUnknown(T *&ppUnknown) noexcept {
-	if (ppUnknown) {
-		try {
+inline void ReleaseUnknown(T *&ppUnknown) noexcept 
+{
+	if (ppUnknown) 
+	{
+		try 
+		{
 			ppUnknown->Release();
-		} catch (...) {
+		} catch (...) 
+		{
 			// Never occurs
 		}
 		ppUnknown = nullptr;
 	}
 }
 
-struct UnknownReleaser {
+struct UnknownReleaser 
+{
 	// Called by unique_ptr to destroy/free the resource
 	template <class T>
-	void operator()(T *pUnknown) noexcept {
-		try {
+	void operator()(T *pUnknown) noexcept 
+	{
+		try 
+		{
 			pUnknown->Release();
-		} catch (...) {
+		} catch (...) 
+		{
 			// IUnknown::Release must not throw, ignore if it does.
 		}
 	}

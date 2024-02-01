@@ -3,9 +3,12 @@
 // Used by ZPad.RC
 //
 
+#include "../language/common_res.h"
 
 #define IDD_ABOUTBOX				100
 #define IDR_MAINFRAME				128
+
+#if 0
 //#define IDR_ZPADTYPE	129
 
 #define IDZPAD_FILE_NEW						200
@@ -166,6 +169,8 @@
 #define	IDZPAD_VIEW_SCHEME					447
 
 #define ID_FILE_NEW_WINDOW			32771
+
+#endif
 
 // Next default values for new objects
 // 
