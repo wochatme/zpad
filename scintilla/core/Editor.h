@@ -257,7 +257,13 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 
 	Scintilla::Update needUpdateUI;
 
-	enum class PaintState { notPainting, painting, abandoned } paintState;
+	enum class PaintState 
+	{ 
+		notPainting, 
+		painting, 
+		abandoned 
+	} paintState;
+
 	bool paintAbandonedByStyling;
 	PRectangle rcPaint;
 	bool paintingAllText;
@@ -402,7 +408,14 @@ protected:	// ScintillaBase subclass needs access to much of Editor
 	void NeedWrapping(Sci::Line docLineStart=0, Sci::Line docLineEnd=WrapPending::lineLarge);
 	bool WrapOneLine(Surface *surface, Sci::Line lineToWrap);
 	bool WrapBlock(Surface *surface, Sci::Line lineToWrap, Sci::Line lineToWrapEnd);
-	enum class WrapScope {wsAll, wsVisible, wsIdle};
+	
+	enum class WrapScope 
+	{
+		wsAll, 
+		wsVisible, 
+		wsIdle
+	};
+	
 	bool WrapLines(WrapScope ws);
 	void LinesJoin();
 	void LinesSplit(int pixelWidth);

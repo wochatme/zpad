@@ -45,7 +45,8 @@ enum class Alpha {
 	NoAlpha = 256,
 };
 
-enum class CursorShape {
+enum class CursorShape 
+{
 	Normal = -1,
 	Arrow = 2,
 	Wait = 4,

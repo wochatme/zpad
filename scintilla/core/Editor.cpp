@@ -257,7 +257,8 @@ bool Editor::HasMarginWindow() const noexcept {
 	return wMargin.Created();
 }
 
-Point Editor::GetVisibleOriginInMain() const {
+Point Editor::GetVisibleOriginInMain() const 
+{
 	return Point(0, 0);
 }
 
@@ -1466,7 +1467,8 @@ void Editor::UpdateSystemCaret()
 {
 }
 
-bool Editor::Wrapping() const noexcept {
+bool Editor::Wrapping() const noexcept 
+{
 	return vs.wrap.state != Wrap::None;
 }
 
@@ -1623,7 +1625,8 @@ bool Editor::WrapBlock(Surface *surface, Sci::Line lineToWrap, Sci::Line lineToW
 // wsVisible: wrap currently visible lines
 // wsIdle: wrap one page + 100 lines
 // Return true if wrapping occurred.
-bool Editor::WrapLines(WrapScope ws) {
+bool Editor::WrapLines(WrapScope ws) 
+{
 	Sci::Line goodTopLine = topLine;
 	bool wrapOccurred = false;
 	if (!Wrapping()) {
@@ -1867,7 +1870,8 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) ///- main paint
 		RefreshPixMaps(surfaceWindow);	// In case pixmaps invalidated by scrollbar change
 	}
 
-	if (!marginView.pixmapSelPattern->Initialised()) {
+	if (!marginView.pixmapSelPattern->Initialised()) 
+	{
 		// When Direct2D is used, pixmap creation may fail with D2DERR_RECREATE_TARGET so
 		// abandon this paint to avoid further failures.
 		// Main drawing surface and pixmaps should be recreated by next paint.
@@ -1894,7 +1898,8 @@ void Editor::Paint(Surface *surfaceWindow, PRectangle rcArea) ///- main paint
 			PRectangle rcLeftMargin = rcArea;
 			rcLeftMargin.left = 0;
 			rcLeftMargin.right = rcLeftMargin.left + vs.leftMarginWidth;
-			if (rcArea.Intersects(rcLeftMargin)) {
+			if (rcArea.Intersects(rcLeftMargin)) 
+			{
 				surfaceWindow->FillRectangle(rcLeftMargin, vs.styles[StyleDefault].back);
 			}
 		}
@@ -2550,7 +2555,8 @@ bool Editor::NotifyUpdateUI() {
 	return false;
 }
 
-void Editor::NotifyPainted() {
+void Editor::NotifyPainted() 
+{
 	NotificationData scn = {};
 	scn.nmhdr.code = Notification::Painted;
 	NotifyParent(scn);

@@ -307,10 +307,13 @@ void EditView::RefreshPixMaps(Surface *surfaceWindow, const ViewStyle &vsDraw) {
 	}
 }
 
-std::shared_ptr<LineLayout> EditView::RetrieveLineLayout(Sci::Line lineNumber, const EditModel &model) {
+std::shared_ptr<LineLayout> EditView::RetrieveLineLayout(Sci::Line lineNumber, const EditModel &model) 
+{
 	const Sci::Position posLineStart = model.pdoc->LineStart(lineNumber);
 	const Sci::Position posLineEnd = model.pdoc->LineStart(lineNumber + 1);
+	
 	PLATFORM_ASSERT(posLineEnd >= posLineStart);
+
 	const Sci::Line lineCaret = model.pdoc->SciLineFromPosition(model.sel.MainCaret());
 	return llc.Retrieve(lineNumber, lineCaret,
 		static_cast<int>(posLineEnd - posLineStart), model.pdoc->GetStyleClock(),
@@ -2582,15 +2585,15 @@ void EditView::DrawLine(Surface *surface, const EditModel &model, const ViewStyl
 	}
 }
 
-void EditView::PaintText(Surface *surfaceWindow, const EditModel &model, const ViewStyle &vsDraw,
-	PRectangle rcArea, PRectangle rcClient) 
+///- Draw the real text routine
+void EditView::PaintText(Surface *surfaceWindow, const EditModel &model, const ViewStyle &vsDraw, PRectangle rcArea, PRectangle rcClient) 
 {
 	// Allow text at start of line to overlap 1 pixel into the margin as this displays
 	// serifs and italic stems for aliased text.
 	const int leftTextOverlap = ((model.xOffset == 0) && (vsDraw.leftMarginWidth > 0)) ? 1 : 0;
 
 	// Do the painting
-	if (rcArea.right > vsDraw.textStart - leftTextOverlap) 
+	if (rcArea.right > vsDraw.textStart - leftTextOverlap) ///- textStart is the starting x position of text within the view
 	{
 
 		Surface *surface = surfaceWindow;
@@ -2601,7 +2604,7 @@ void EditView::PaintText(Surface *surfaceWindow, const EditModel &model, const V
 		}
 		surface->SetMode(model.CurrentSurfaceMode());
 
-		const Point ptOrigin = model.GetVisibleOriginInMain();
+		const Point ptOrigin = model.GetVisibleOriginInMain(); ///- (0,0)
 
 		const int screenLinePaintFirst = static_cast<int>(rcArea.top) / vsDraw.lineHeight;
 		const int xStart = vsDraw.textStart - model.xOffset + static_cast<int>(ptOrigin.x);

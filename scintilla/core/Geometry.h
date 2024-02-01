@@ -281,12 +281,13 @@ public:
 /**
 * Holds an RGBA colour to fill a shape.
 */
-class Fill {
+class Fill 
+{
 public:
 	ColourRGBA colour;
 	constexpr Fill(ColourRGBA colour_) noexcept :
-		colour(colour_) {
-	}
+		colour(colour_) 
+	{}
 };
 
 /**

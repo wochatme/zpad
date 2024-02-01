@@ -40,7 +40,8 @@ struct FontMeasurements {
 
 /**
  */
-class Style : public FontSpecification, public FontMeasurements {
+class Style : public FontSpecification, public FontMeasurements 
+{
 public:
 	ColourRGBA fore;
 	ColourRGBA back;

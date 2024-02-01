@@ -20,7 +20,8 @@ struct PrintParameters {
 /**
 * The view may be drawn in separate phases.
 */
-enum class DrawPhase {
+enum class DrawPhase 
+{
 	none = 0x0,
 	back = 0x1,
 	indicatorsBack = 0x2,
@@ -49,7 +50,8 @@ class LineTabstops;
 /**
 * EditView draws the main text area.
 */
-class EditView {
+class EditView 
+{
 public:
 	PrintParameters printParameters;
 	std::unique_ptr<LineTabstops> ldTabstops;

@@ -109,7 +109,8 @@ enum StyleIndices {
 
 /**
  */
-class ViewStyle {
+class ViewStyle 
+{
 	UniqueStringSet fontNames;
 	FontMap fonts;
 public:
@@ -239,7 +240,14 @@ public:
 
 	bool WhiteSpaceVisible(bool inIndent) const noexcept;
 
-	enum class CaretShape { invisible, line, block, bar };
+	enum class CaretShape 
+	{ 
+		invisible, 
+		line, 
+		block, 
+		bar 
+	};
+
 	bool IsBlockCaretStyle() const noexcept;
 	bool IsCaretVisible(bool isMainSelection) const noexcept;
 	bool DrawCaretInsideSelection(bool inOverstrike, bool imeCaretBlockOverride) const noexcept;

@@ -183,7 +183,8 @@ struct SurfaceMode {
 /**
  * A surface abstracts a place to draw.
  */
-class Surface {
+class Surface 
+{
 public:
 	Surface() noexcept = default;
 	Surface(const Surface &) = delete;
@@ -191,6 +192,7 @@ public:
 	Surface &operator=(const Surface &) = delete;
 	Surface &operator=(Surface &&) = delete;
 	virtual ~Surface() noexcept = default;
+
 	static std::unique_ptr<Surface> Allocate(Scintilla::Technology technology);
 
 	virtual void Init(WindowID wid)=0;

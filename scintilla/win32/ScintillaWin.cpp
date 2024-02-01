@@ -129,15 +129,18 @@ namespace {
 
 const TCHAR callClassName[] = TEXT("CallTip");
 
-void SetWindowID(HWND hWnd, int identifier) noexcept {
+void SetWindowID(HWND hWnd, int identifier) noexcept 
+{
 	::SetWindowLongPtr(hWnd, GWLP_ID, identifier);
 }
 
-Point PointFromLParam(sptr_t lpoint) noexcept {
+Point PointFromLParam(sptr_t lpoint) noexcept 
+{
 	return Point::FromInts(GET_X_LPARAM(lpoint), GET_Y_LPARAM(lpoint));
 }
 
-bool KeyboardIsKeyDown(int key) noexcept {
+bool KeyboardIsKeyDown(int key) noexcept 
+{
 	return (::GetKeyState(key) & 0x80000000) != 0;
 }
 
@@ -881,20 +884,29 @@ Keys KeyTranslate(uptr_t keyIn) noexcept {
 	}
 }
 
-bool BoundsContains(PRectangle rcBounds, HRGN hRgnBounds, PRectangle rcCheck) noexcept {
+bool BoundsContains(PRectangle rcBounds, HRGN hRgnBounds, PRectangle rcCheck) noexcept 
+{
 	bool contains = true;
-	if (!rcCheck.Empty()) {
-		if (!rcBounds.Contains(rcCheck)) {
+
+	if (!rcCheck.Empty()) 
+	{
+		if (!rcBounds.Contains(rcCheck)) 
+		{
 			contains = false;
-		} else if (hRgnBounds) {
+		} 
+		else if (hRgnBounds) 
+		{
 			// In bounding rectangle so check more accurately using region
 			const RECT rcw = RectFromPRectangle(rcCheck);
 			HRGN hRgnCheck = ::CreateRectRgnIndirect(&rcw);
-			if (hRgnCheck) {
+			if (hRgnCheck) 
+			{
 				HRGN hRgnDifference = ::CreateRectRgn(0, 0, 0, 0);
-				if (hRgnDifference) {
+				if (hRgnDifference) 
+				{
 					const int combination = ::CombineRgn(hRgnDifference, hRgnCheck, hRgnBounds, RGN_DIFF);
-					if (combination != NULLREGION) {
+					if (combination != NULLREGION) 
+					{
 						contains = false;
 					}
 					::DeleteRgn(hRgnDifference);
@@ -1082,7 +1094,8 @@ sptr_t ScintillaWin::WndPaint() ///- the handle to WM_PAINT
 	}
 
 	::EndPaint(MainHWND(), &ps);
-	if (paintState == PaintState::abandoned) {
+	if (paintState == PaintState::abandoned) 
+	{
 		// Painting area was insufficient to cover new styling or brace highlight positions
 		FullPaint();
 		::ValidateRect(MainHWND(), nullptr);
@@ -2560,7 +2573,8 @@ void ScintillaWin::NotifyFocus(bool focus) {
 	Editor::NotifyFocus(focus);
 }
 
-void ScintillaWin::SetCtrlID(int identifier) {
+void ScintillaWin::SetCtrlID(int identifier) 
+{
 	::SetWindowID(HwndFromWindow(wMain), identifier);
 }
 
@@ -2568,11 +2582,11 @@ int ScintillaWin::GetCtrlID() {
 	return ::GetDlgCtrlID(HwndFromWindow(wMain));
 }
 
-void ScintillaWin::NotifyParent(NotificationData scn) {
+void ScintillaWin::NotifyParent(NotificationData scn) ///- send the WM_NOTIFY message to the parent
+{
 	scn.nmhdr.hwndFrom = MainHWND();
 	scn.nmhdr.idFrom = GetCtrlID();
-	::SendMessage(::GetParent(MainHWND()), WM_NOTIFY,
-	              GetCtrlID(), reinterpret_cast<LPARAM>(&scn));
+	::SendMessage(::GetParent(MainHWND()), WM_NOTIFY, GetCtrlID(), reinterpret_cast<LPARAM>(&scn));
 }
 
 void ScintillaWin::NotifyDoubleClick(Point pt, KeyMod modifiers) {
@@ -3389,12 +3403,16 @@ void ScintillaWin::HorizontalScrollMessage(WPARAM wParam) {
  * Redraw all of text area.
  * This paint will not be abandoned.
  */
-void ScintillaWin::FullPaint() {
-	if ((technology == Technology::Default) || (technology == Technology::DirectWriteDC)) {
+void ScintillaWin::FullPaint() 
+{
+	if ((technology == Technology::Default) || (technology == Technology::DirectWriteDC)) 
+	{
 		HDC hdc = ::GetDC(MainHWND());
 		FullPaintDC(hdc);
 		::ReleaseDC(MainHWND(), hdc);
-	} else {
+	} 
+	else 
+	{
 		FullPaintDC({});
 	}
 }
@@ -3403,11 +3421,14 @@ void ScintillaWin::FullPaint() {
  * Redraw all of text area on the specified DC.
  * This paint will not be abandoned.
  */
-void ScintillaWin::FullPaintDC(HDC hdc) {
+void ScintillaWin::FullPaintDC(HDC hdc) 
+{
 	paintState = PaintState::painting;
 	rcPaint = GetClientRectangle();
 	paintingAllText = true;
+
 	PaintDC(hdc);
+
 	paintState = PaintState::notPainting;
 }
 

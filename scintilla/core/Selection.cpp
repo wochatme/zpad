@@ -263,7 +263,8 @@ SelectionRange &Selection::RangeMain() noexcept {
 	return ranges[mainRange];
 }
 
-const SelectionRange &Selection::RangeMain() const noexcept {
+const SelectionRange &Selection::RangeMain() const noexcept 
+{
 	return ranges[mainRange];
 }
 

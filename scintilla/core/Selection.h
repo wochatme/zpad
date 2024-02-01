@@ -10,16 +10,19 @@
 
 namespace Scintilla::Internal {
 
-class SelectionPosition {
+class SelectionPosition 
+{
 	Sci::Position position;
 	Sci::Position virtualSpace;
 public:
-	explicit SelectionPosition(Sci::Position position_= Sci::invalidPosition, Sci::Position virtualSpace_=0) noexcept : position(position_), virtualSpace(virtualSpace_) {
+	explicit SelectionPosition(Sci::Position position_= Sci::invalidPosition, Sci::Position virtualSpace_=0) noexcept : position(position_), virtualSpace(virtualSpace_) 
+	{
 		PLATFORM_ASSERT(virtualSpace < 800000000);
 		if (virtualSpace < 0)
 			virtualSpace = 0;
 	}
-	void Reset() noexcept {
+	void Reset() noexcept 
+	{
 		position = 0;
 		virtualSpace = 0;
 	}
@@ -92,14 +95,17 @@ struct SelectionSegment {
 	}
 };
 
-struct SelectionRange {
+struct SelectionRange 
+{
 	SelectionPosition caret;
 	SelectionPosition anchor;
 
-	SelectionRange() noexcept : caret(), anchor() {
-	}
-	explicit SelectionRange(SelectionPosition single) noexcept : caret(single), anchor(single) {
-	}
+	SelectionRange() noexcept : caret(), anchor() 
+	{}
+
+	explicit SelectionRange(SelectionPosition single) noexcept : caret(single), anchor(single) 
+	{}
+
 	explicit SelectionRange(Sci::Position single) noexcept : caret(single), anchor(single) {
 	}
 	SelectionRange(SelectionPosition caret_, SelectionPosition anchor_) noexcept : caret(caret_), anchor(anchor_) {
@@ -146,7 +152,8 @@ struct SelectionRange {
 // Deliberately an enum rather than an enum class to allow treating as bool
 enum InSelection { inNone, inMain, inAdditional };
 
-class Selection {
+class Selection 
+{
 	std::vector<SelectionRange> ranges;
 	std::vector<SelectionRange> rangesSaved;
 	SelectionRange rangeRectangular;

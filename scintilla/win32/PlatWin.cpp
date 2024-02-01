@@ -2808,27 +2808,34 @@ XYPOSITION SurfaceD2D::AverageCharWidth(const Font *font_) {
 	return width;
 }
 
-void SurfaceD2D::SetClip(PRectangle rc) {
-	if (pRenderTarget) {
+void SurfaceD2D::SetClip(PRectangle rc) 
+{
+	if (pRenderTarget) 
+	{
 		const D2D1_RECT_F rcClip = RectangleFromPRectangle(rc);
 		pRenderTarget->PushAxisAlignedClip(rcClip, D2D1_ANTIALIAS_MODE_ALIASED);
 		clipsActive++;
 	}
 }
 
-void SurfaceD2D::PopClip() {
-	if (pRenderTarget) {
+void SurfaceD2D::PopClip() 
+{
+	if (pRenderTarget) 
+	{
 		PLATFORM_ASSERT(clipsActive > 0);
 		pRenderTarget->PopAxisAlignedClip();
 		clipsActive--;
 	}
 }
 
-void SurfaceD2D::FlushCachedState() {
+void SurfaceD2D::FlushCachedState() 
+{
 }
 
-void SurfaceD2D::FlushDrawing() {
-	if (pRenderTarget) {
+void SurfaceD2D::FlushDrawing() 
+{
+	if (pRenderTarget) 
+	{
 		pRenderTarget->Flush();
 	}
 }

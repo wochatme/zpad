@@ -46,7 +46,8 @@ public:
 
 /**
  */
-class LineLayout {
+class LineLayout 
+{
 private:
 	std::unique_ptr<int []>lineStarts;
 	int lenLineStarts;
